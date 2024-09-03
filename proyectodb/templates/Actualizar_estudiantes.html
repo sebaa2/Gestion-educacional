@@ -1,0 +1,44 @@
+{% extends "./Base.html" %}
+
+{% block body %}
+<div class="card">
+    <div class="card-body">
+        <form action="{% url 'editar_estudiante' idEstudiante=estudiante.idEstudiante %}" method="POST">
+            {% csrf_token %}
+            <h6>Nombres</h6>
+            <div class="form-group">
+                <input type="text" id="txtestudiante" name="txtestudiante" value="{{ estudiante.nombre }}" class="form-control" placeholder="Ingrese nombres">
+            </div>
+            <br>
+            <h6>Apellidos</h6>
+            <div class="form-group">
+                <input type="text" id="txtapellidos" name="txtapellidos" value="{{ estudiante.apellido }}" class="form-control" placeholder="Ingrese apellidos">
+            </div>
+            <br>
+            <h6>Fecha nacimiento</h6>
+            <div class="form-group">
+                <input type="date" id="txtfechan" name="txtfechan" value="{{ estudiante.fecha_nacimiento }}" class="form-control" placeholder="Ingrese fecha de nacimiento">
+            </div>
+            <br>
+            <h6>Dirección</h6>
+            <div class="form-group">
+                <input type="text" id="txtdireccion" name="txtdireccion" value="{{ estudiante.direccion }}" class="form-control" placeholder="Ingrese dirección">
+            </div>
+            <br>
+            <h6>Teléfono</h6>
+            <div class="form-group">
+                <input type="number" id="txtfono" name="txtfono" value="{{ estudiante.telefono }}" class="form-control" placeholder="Ingrese número de teléfono">
+            </div>
+            <br>
+            <h6>Fecha de inscripción</h6>
+            <div class="form-group">
+                <input type="date" id="txtfechai" name="txtfechai" value="{{ estudiante.fecha_inscripcion }}" class="form-control" placeholder="Ingrese fecha de inscripción">
+            </div>
+            <br>
+            <div class="form-control">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

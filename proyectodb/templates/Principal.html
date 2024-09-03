@@ -1,0 +1,78 @@
+{% extends "./Base.html" %}
+{% load static %}
+{% block body %}
+<title>Principal</title>
+<body style="background-color: #4CAF50;">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="row align-items-center">
+            <!-- Columna de la imagen -->
+            <div class="col-md-6 text-center">
+                <img src="{% static 'imagenes/ll.png' %}" class="img-fluid" alt="Smiling woman with books" style="border: 5px solid #000000; padding: 0.1px;">
+            </div>
+            <!-- Columna del contenido -->
+            <div class="col-md-6 text-center" style="background-color: #f3e07f; border: 5px solid #000000; padding: 10px; border-radius: 30px;">
+                <h1 class="display-4" style="color: rgb(0, 0, 0);">Te damos la bienvenida</h1>
+                <h5 style="color: rgb(0, 0, 0);">¿Qué eres?</h5>
+                <div class="d-grid gap-3 col-8 mx-auto">
+                    <a class="btn btn-primary btn-lg rounded-pill" href="Login_estudiante/">Alumno</a>
+                    <a class="btn btn-primary btn-lg rounded-pill" href="/">Profesor</a>
+                    <a class="btn btn-primary btn-lg rounded-pill" href="Login_admin/">Administrador</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="padding: 30px; border: 5px solid #ff0000; background-color: rgb(255, 252, 252);">
+        <h3 style="text-align: center;">!!!ACASO NO ESTAS MATRICULADO MATRICULATE AHORA MISMO¡¡¡</h3>
+        <h5 style="text-align: center;">Escribe tu correo con tu nombre y te llegara un correo para una reunion</h5>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Escribe tu correo" aria-label="correo" aria-describedby="basic-addon2">
+            <span class="input-group-text" id="basic-addon2" style="background-color: #a09f9f;">@Ejemplo.com</span>
+        </div>
+        <div class="d-grid gap-2" style="text-align: center;">
+            <button class="btn btn-danger" type="button" style="margin-top: 15px;">Enviar</button>
+        </div>
+    </div>
+    <br>
+    <div  class="text-center" style="background-color: #222;">
+    <div class="container" style="background-color: #222;;">
+        <div class="row" style="background-color: #222;;">
+            <!-- Primera columna -->
+            <div class="col-md-4 text-center" style="background-color: #222;;">
+                <h5 style="color: #fff;">Escuela ABC</h5>
+                <p style="color: #fff;">Calle Falsa 123, Ciudad, País</p>
+                <p style="color: #fff;">Teléfono: (123) 456-7890</p>
+                <p style="color: #fff;">Email: contacto@escuelaabc.com</p>
+            </div>
+            
+            <!-- Segunda columna -->
+            <div class="col-md-4 text-center">
+                <h5>Enlaces Rápidos</h5>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li><a href="/" style="color: #fff; text-decoration: none;">Inicio</a></li>
+                    <li><a href="/nosotros" style="color: #fff; text-decoration: none;">Nosotros</a></li>
+                    <li><a href="/cursos" style="color: #fff; text-decoration: none;">Cursos</a></li>
+                    <li><a href="/contacto" style="color: #fff; text-decoration: none;">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <!-- Tercera columna -->
+            <div class="col-md-4 text-center">
+                <h5>Síguenos</h5>
+                <a href="https://www.facebook.com" style="color: #fff; text-decoration: none; margin-right: 15px;">
+                    <img src="{% static 'imagenes/facebook-icon.png' %}" alt="Facebook" style="width: 30px;">
+                </a>
+                <a href="https://www.twitter.com" style="color: #fff; text-decoration: none; margin-right: 15px;">
+                    <img src="{% static 'imagenes/twitter-icon.png' %}" alt="Twitter" style="width: 30px;">
+                </a>
+                <a href="https://www.instagram.com" style="color: #fff; text-decoration: none;">
+                    <img src="{% static 'imagenes/instagram-icon.png' %}" alt="Instagram" style="width: 30px;">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="text-center" style="background-color: #222; padding: 10px;">
+        <p class="mb-0" style="color: #fff;">&copy; 2024 Escuela ABC. Todos los derechos reservados.</p>
+    </div>
+    </div>    
+</body>
+{% endblock %}

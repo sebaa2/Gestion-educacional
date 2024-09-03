@@ -1,0 +1,26 @@
+{% extends "./Base.html" %}
+<title>Login estudiante</title>
+{% block body %}
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="mt-5">Inicio de sesión</h2>
+                <hr>
+                <form name="frm_login" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="txt_username" class="form-label">Rut</label>
+                        <input type="text" name="txt_username" id="txt_username" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txt_password" class="form-label">Clave</label>
+                        <input type="password" name="txt_password" id="txt_password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Ingresar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}

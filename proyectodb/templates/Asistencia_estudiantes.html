@@ -1,0 +1,23 @@
+{% extends "./Base.html" %}
+{% block body %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Asistencia</th>
+            <th>Nombre</th>
+            <th>Curso</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for asis in asistencia %}
+            <tr>
+                <td>{{ asis.fecha }}</td>
+                <td>{% if asis.presente %}Presente{% else %}No Presente{% endif %}</td>
+                <td>{{ asis.estudiante.nombre }} {{ asis.estudiante.apellido }}</td>
+                <td>{{ asis.curso.nombre_curso }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

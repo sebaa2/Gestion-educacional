@@ -1,0 +1,77 @@
+{% extends "./Base.html" %}
+<title>Panel de estudiantes</title>
+{% load static %}
+{% block body %}
+<div class="alert" role="alert">
+    Usuario : {{ usuario }}
+</div>
+<div class="row h-100">
+    <div class="col-6" >
+        <a href="{% url 'Asistencia_estudiantes' %}"><div class="card m-1 ">
+            <center><img src="{% static 'imagenes/horario.png' %}" alt="" style="width: 200px; height: auto;"></center>
+            <h5 style="text-align: center;">Horario</h5>
+        </div></a>
+    </div>
+    <div class="col-6">
+        <a href=""><div class="card m-1 ">
+            <center><img src="{% static 'imagenes/cursos.png' %}" alt="" style="width: 200px; height: auto;"></center>
+            <h5 style="text-align: center;">Asignaturas</h5>
+        </div></a>
+    </div>
+    <div class="col-6">
+        <a href=""><div class="card m-1 ">
+            <center><img src="{% static 'imagenes/calificaciones.png' %}" alt="" style="width: 200px; height: auto;"></center>
+            <h5 style="text-align: center;">Calificaciones</h5>
+        </div></a>
+    </div>
+    <div class="col-6">
+        <a href=""><div class="card m-1 ">
+            <center><img src="{% static 'imagenes/profesor.png' %}" alt="" style="width: 200px; height: auto;"></center>
+            <h5 style="text-align: center;">Profesores</h5>
+        </div></a>
+    </div>
+</div>
+<br>
+<div  class="text-center" style="background-color: #222;">
+    <div class="container" style="background-color: #222;;">
+        <div class="row" style="background-color: #222;;">
+            <!-- Primera columna -->
+            <div class="col-md-4 text-center" style="background-color: #222;;">
+                <h5 style="color: #fff;">Escuela ABC</h5>
+                <p style="color: #fff;">Calle Falsa 123, Ciudad, País</p>
+                <p style="color: #fff;">Teléfono: (123) 456-7890</p>
+                <p style="color: #fff;">Email: contacto@escuelaabc.com</p>
+            </div>
+            
+            <!-- Segunda columna -->
+            <div class="col-md-4 text-center">
+                <h5>Enlaces Rápidos</h5>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li><a href="/" style="color: #fff; text-decoration: none;">Inicio</a></li>
+                    <li><a href="/nosotros" style="color: #fff; text-decoration: none;">Nosotros</a></li>
+                    <li><a href="/cursos" style="color: #fff; text-decoration: none;">Cursos</a></li>
+                    <li><a href="/contacto" style="color: #fff; text-decoration: none;">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <!-- Tercera columna -->
+            <div class="col-md-4 text-center">
+                <h5>Síguenos</h5>
+                <a href="https://www.facebook.com" style="color: #fff; text-decoration: none; margin-right: 15px;">
+                    <img src="{% static 'imagenes/facebook-icon.png' %}" alt="Facebook" style="width: 30px;">
+                </a>
+                <a href="https://www.twitter.com" style="color: #fff; text-decoration: none; margin-right: 15px;">
+                    <img src="{% static 'imagenes/twitter-icon.png' %}" alt="Twitter" style="width: 30px;">
+                </a>
+                <a href="https://www.instagram.com" style="color: #fff; text-decoration: none;">
+                    <img src="{% static 'imagenes/instagram-icon.png' %}" alt="Instagram" style="width: 30px;">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="text-center" style="background-color: #222; padding: 10px;">
+        <p class="mb-0" style="color: #fff;">&copy; 2024 Escuela ABC. Todos los derechos reservados.</p>
+    </div>
+    </div>    
+</body>
+{% endblock %}

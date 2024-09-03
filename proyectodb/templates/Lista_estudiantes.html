@@ -1,0 +1,35 @@
+{% extends "./Base.html" %}
+<title>lista de estudiantes</title>
+{% block body %}
+<h2>Lista de estudiantes</h2>
+<a class="btn btn-primary" href="/Agregar_estudiantes">Agregar</a>
+<!-- Tabla con datos-->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID </th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Direccion</th>
+                <th>Telefono</th>
+                <th>Fecha inscripcion</th>
+                <th>Rut</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for estu in estudiantes %}
+                <tr>
+                    <td>{{ estu.idEstudiante }} </td>
+                    <td>{{ estu.nombre }} </td>
+                    <td>{{ estu.apellido }} </td>
+                    <td>{{ estu.direccion }}</td>
+                    <td>{{ estu.telefono }}</td>
+                    <td>{{ estu.matricula }}</td>
+                    <td>{{ estu.rut }}</td>
+                    <td><a href="EliminarEstudiante/{{estu.idEstudiante}}" class="btn btn-danger">Eliminar</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

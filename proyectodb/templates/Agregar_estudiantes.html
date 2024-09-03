@@ -1,0 +1,52 @@
+{% extends "./Base.html" %}
+<title>Agregar estudiante</title>
+{% block body %}
+<h1 style="text-align: center;">Agregar alumno</h1>
+<div class="card">
+    <div class="card-body">
+        <form action="/RegistrarEstudiante/" method="POST">{% csrf_token %}
+            <h6>Nombres</h6>
+            <div class="form-group">
+                <input type="text" id="txtestudiante" name="txtestudiante" class="form-control" placeholder="Ingrese nombres">
+            </div>
+            <br>
+            <h6>Apellidos</h6>
+            <div class="form-group">
+                <input type="text" id="txtapellidos" name="txtapellidos" class="form-control" placeholder="ingrese apellidos">
+            </div>
+            <br>
+            <h6>Fecha nacimiento</h6>
+            <div class="form-group">
+                <input type="date" id="txtfechan" name="txtfechan" class="form-control" placeholder="ingrese fecha de nacimiento">
+            </div>
+            <br>
+            <h6>Dirección</h6>
+            <div class="form-group">
+                <input type="text" id="txtdireccion" name="txtdireccion" class="form-control" placeholder="ingrese dirección">
+            </div>
+            <br>
+            <h6>Telefono</h6>
+            <div class="form-group">
+                <input type="number" id="txtfono" name="txtfono" class="form-control" placeholder="ingrese numero de telefono">
+            </div>
+            <br>
+            <h6>Fecha de inscripcion</h6>
+            <div class="form-group">
+                <input type="date" id="txtfechai" name="txtfechai" class="form-control" placeholder="ingrese fecha de inscripcion">
+            </div>
+            <br>
+            <h6>rut</h6>
+            <div class="form-group">
+                <input type="number" id="txtrut" name="txtrut" class="form-control" placeholder="ingrese rut">
+            </div>
+            <h6>contraseña</h6>
+            <div class="form-group">
+                <input type="password" id="txtpassword" name="txtpassword" class="form-control" placeholder="ingrese contraseña">
+            </div>
+            <div class="form-control">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
+    </div>
+ </div>
+{% endblock %}
