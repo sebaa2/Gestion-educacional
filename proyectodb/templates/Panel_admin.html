@@ -70,32 +70,32 @@
     <nav style="display: flex;">
         <a href="#inicio">Inicio</a>
         <a href="#perfil">Perfil</a>
-        <a href="/logout_admin">cerrar sesion</a>
+        <a href="{% url 'logout_admin' %}">cerrar sesion</a>
     </nav>
 <div class="alert" role="alert">
-    Usuario : {{ usuario }}
+    Usuario : {{ nombre_completo }}
 </div>
 <div class="row h-100">
     <div class="col-6" >
-        <a href="{% url 'Asistencia_estudiantes' %}"><div class="card m-1 ">
+        <a href="{% url 'agregar_estudiante' %}"><div class="card m-1 ">
             <center><img src="{% static 'imagenes/estudiantes.png' %}" alt="" style="width: 200px; height: auto;"></center>
             <h5 style="text-align: center;">Agregar estudiantes</h5>
         </div></a>
     </div>
     <div class="col-6">
-        <a href=""><div class="card m-1 ">
+        <a href="{% url 'agregar_profesor' %}"><div class="card m-1 ">
             <center><img src="{% static 'imagenes/profesor.png' %}" alt="" style="width: 200px; height: auto;"></center>
             <h5 style="text-align: center;">Agregar profesor</h5>
         </div></a>
     </div>
     <div class="col-6">
-        <a href=""><div class="card m-1 ">
+        <a href="{% url 'agregar_curso' %}"><div class="card m-1 ">
             <center><img src="{% static 'imagenes/cursos.png' %}" alt="" style="width: 200px; height: auto;"></center>
             <h5 style="text-align: center;">Agregar cursos</h5>
         </div></a>
     </div>
     <div class="col-6">
-        <a href=""><div class="card m-1 ">
+        <a href="{% url 'agregar_asignatura' %}"><div class="card m-1 ">
             <center><img src="{% static 'imagenes/asignaturas.png' %}" alt="" style="width: 200px; height: auto;"></center>
             <h5 style="text-align: center;">Agregar asignaturas</h5>
         </div></a>

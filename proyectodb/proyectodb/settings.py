@@ -66,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'appproject.datos_globales.datos_globales',
             ],
         },
     },
@@ -79,8 +80,10 @@ WSGI_APPLICATION = 'proyectodb.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'Proyecto.db',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dbacademico',
+        'USER': 'root',
+        'PASSWORD': '',
     }
 }
 
@@ -126,3 +129,5 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+

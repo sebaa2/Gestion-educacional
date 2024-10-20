@@ -1,0 +1,32 @@
+{% extends "./Base.html" %}
+<title>Lista de Cursos</title>
+{% block body %}
+<h2>Lista de Cursos</h2>
+<!-- Tabla con datos-->
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre del Curso</th>
+            <th>Clases</th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for curso in cursos %}
+            <tr>
+                <td>{{ curso.idCurso }}</td>
+                <td>{{ curso.nombre_curso }}</td>
+                <td>
+                    {% for clase in curso.clases.all %}
+                        {{ clase }}{% if not forloop.last %}, {% endif %}  <!-- Muestra las clases separadas por comas -->
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="EliminarCurso/{{curso.idCurso}}" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

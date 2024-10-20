@@ -1,0 +1,30 @@
+{% extends "./Base.html" %}
+<title>Lista de Asignaturas</title>
+{% block body %}
+<h2>Lista de Asignaturas</h2>
+<!-- Tabla con datos-->
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre de la Asignatura</th>
+            <th>Fecha de Matrícula</th>
+            <th>Profesor</th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for asignatura in asignaturas %}
+            <tr>
+                <td>{{ asignatura.idClases }}</td>
+                <td>{{ asignatura.nombre }}</td>
+                <td>{{ asignatura.fecha_matricula }}</td>
+                <td>{{ asignatura.profesor.nombre }} {{ asignatura.profesor.apellido }}</td> <!-- Mostramos el nombre completo del profesor -->
+                <td>
+                    <a href="EliminarAsignatura/{{ asignatura.idClases }}" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "./Base.html" %}
+<title>Agregar profesor</title>
+{% block body %}
+<h1 style="text-align: center;">Agregar profesor</h1>
+<div class="card">
+    <div class="card-body">
+        <form action="/agregar_profesor/" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="form-control">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
+    </div>
+ </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "./Base.html" %}
+<title>Asignaturas de {{ estudiante.nombre }} {{ estudiante.apellido }}</title>
+{% block body %}
+<h2>Asignaturas de {{ estudiante.nombre }} {{ estudiante.apellido }}</h2>
+
+<div class="row">
+    {% if clases %}
+        {% for clase in clases %}
+        <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+            <div class="card">
+                <img src="{% static 'images/asignatura_icon.png' %}" class="card-img-top" alt="Asignatura Icono">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ clase.nombre }}</h5>
+                    <p class="card-text">Profesor: {{ clase.profesor.nombre }} {{ clase.profesor.apellido }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-center">No hay asignaturas disponibles para este estudiante.</p>
+    {% endif %}
+</div>
+
+<a href="{% url 'lista_estudiantes' %}" class="btn btn-secondary">Volver a Estudiantes</a>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "./Base.html" %}
+<title>Agregar Asignaturas</title>
+{% block body %}
+<h2>Agregar Asignaturas</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Muestra el formulario como párrafos -->
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
+{% endblock %}

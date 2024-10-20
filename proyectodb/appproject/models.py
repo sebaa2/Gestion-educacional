@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Profesor(models.Model):
     idProfesor = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=45)
@@ -8,6 +9,7 @@ class Profesor(models.Model):
     correo = models.EmailField(max_length=45)
     rut = models.CharField(max_length=45)
     contraseña = models.CharField(max_length=45)
+    matricula = models.DateField()
 
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
@@ -31,7 +33,6 @@ class Curso(models.Model):
     def __str__(self):
         return self.nombre_curso
 
-
 class Estudiante(models.Model):
     idEstudiante = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=45)
@@ -41,13 +42,28 @@ class Estudiante(models.Model):
     telefono = models.IntegerField()
     matricula = models.DateField()
     rut = models.IntegerField()
-    contraseña = models.CharField(max_length=45)
+    contraseña = models.CharField(max_length=200)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE, default='Sin asignar')
 
+    class Meta:
+        managed = False
+        db_table = 'appproject_estudiante'
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
 
-    
+class Asistencia(models.Model):
+    idAsistencia = models.AutoField(primary_key=True)
+    fecha = models.DateField()
+    presente = models.BooleanField(default=False)
+    no_presente = models.BooleanField(default=False)
+    estudiante = models.ForeignKey('Estudiante', on_delete=models.CASCADE)
+    curso = models.ForeignKey('Curso', on_delete=models.CASCADE, null=True)
+    clase = models.ForeignKey('Clases', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.estudiante} - {self.fecha} - Presente: {self.presente}"
+
+
 
 class Calificacion(models.Model):
     idCalificacion = models.AutoField(primary_key=True)
@@ -56,22 +72,11 @@ class Calificacion(models.Model):
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
     profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE)
     clase = models.ForeignKey(Clases, on_delete=models.CASCADE, default=10)
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.nota} - {self.estudiante.nombre} {self.estudiante.apellido}"
     
-
-class Asistencia(models.Model):
-    idAsistencia = models.AutoField(primary_key=True)
-    fecha = models.DateField()
-    presente = models.BooleanField(default=False)
-    no_presente = models.BooleanField(default=False)
-    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
-    curso = models.ForeignKey(Curso, on_delete=models.CASCADE, null=True)
-    clase = models.ForeignKey(Clases, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"{self.presente} {self.no_presente}"
     
 class Administrador(models.Model):
     idAdministrador = models.AutoField(primary_key=True)
