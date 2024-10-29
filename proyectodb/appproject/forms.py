@@ -8,19 +8,23 @@ class LoginForm(forms.Form):
 class CalificacionForm(forms.ModelForm):
     class Meta:
         model = Calificacion
-        fields = ['nota', 'estudiante', 'clase']
-
-    def __init__(self, *args, **kwargs):
-        profesor_id = kwargs.pop('profesor_id', None)
-        super(CalificacionForm, self).__init__(*args, **kwargs)
-        
-        # Filtrar clases por profesor
-        if profesor_id:
-            self.fields['clase'].queryset = Clases.objects.filter(profesor_id=profesor_id)
-            # Filtrar estudiantes por las clases que imparte el profesor
-            self.fields['estudiante'].queryset = Estudiante.objects.filter(curso__clases__profesor_id=profesor_id).distinct()
-
-
+        fields = ['nota', 'fecha_registro', 'estudiante', 'profesor', 'clase', 'curso']
+        widgets = {
+            'curso': forms.Select(attrs={'class': 'form-control'}),
+            'profesor': forms.Select(attrs={'class': 'form-control'}),
+            'clase': forms.Select(attrs={'class': 'form-control'}),
+            'estudiante': forms.Select(attrs={'class': 'form-control'}),
+            'fecha_registro': forms.DateInput(attrs={'type': 'date'}),
+            'nota': forms.NumberInput(attrs={'step': '0.1', 'min': '0', 'max': '10'}),
+        }
+        labels = {
+            'nota': 'Nota',
+            'fecha_registro': 'Fecha de Registro',
+            'estudiante': 'Estudiante',
+            'profesor': 'Profesor',
+            'clase': 'Clase',
+            'curso': 'Curso',
+        }
 class AgregarEstudiantes(forms.ModelForm):
     class Meta:  # Definir la clase Meta para vincular el modelo
         model = Estudiante
