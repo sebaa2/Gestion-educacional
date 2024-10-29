@@ -34,7 +34,7 @@ def logout_profesor(request):
     return redirect('login_profesor')
 
 #cambios en este metodo enfocado en las notas, falta testeo 
-def agregar_calificacion(request, profesor_id):
+def agregar_calificacion(request):
     if request.method == 'POST':
         form = CalificacionForm(request.POST)
         if form.is_valid():
@@ -43,4 +43,4 @@ def agregar_calificacion(request, profesor_id):
     else:
         form = CalificacionForm(profesor_id=profesor_id)
 
-    return render(request, 'Agregar_calificacion.html', {'form': form, 'profesor': Profesor})
+    return render(request, 'Agregar_calificacion.html', {'form': form})
