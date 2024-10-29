@@ -41,6 +41,6 @@ def agregar_calificacion(request):
             form.save()
             return redirect('/Panel_profesor')  # Redirige a la vista deseada
     else:
-        form = CalificacionForm(profesor_id=profesor_id)
+        form = CalificacionForm()
 
     return render(request, 'Agregar_calificacion.html', {'form': form})
