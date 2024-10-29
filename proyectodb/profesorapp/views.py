@@ -34,17 +34,11 @@ def logout_profesor(request):
     return redirect('login_profesor')
 
 def agregar_calificacion(request, profesor_id):
-    profesor = get_object_or_404(Profesor, idProfesor=profesor_id)
-
     if request.method == 'POST':
-        form = CalificacionForm(request.POST, profesor_id=profesor_id)
+        form = CalificacionForm(request.POST)
         if form.is_valid():
-            calificacion = form.save(commit=False)
-            calificacion.profesor = profesor  # Asignar el profesor que califica
-            calificacion.curso = calificacion.clase.curso_set.first()  # Asignar el curso de la clase
-            calificacion.save()
-            return redirect('calificaciones')  # Redirigir a una lista de calificaciones
+            form.save()
+            return redirect('/Panel_profesor')  # Redirige a la vista deseada
     else:
-        form = CalificacionForm(profesor_id=profesor_id)
-
-    return render(request, 'Agregar_calificacion.html', {'form': form, 'profesor': profesor})
+        form = CalificacionForm()
+    return render(request, 'agregar_calificacion.html', {'form': form})
