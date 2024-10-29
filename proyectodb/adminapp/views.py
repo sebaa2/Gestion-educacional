@@ -101,8 +101,8 @@ def Eliminar_profesor(request, idProfesor):
     profesor.delete()
     return redirect('Lista_profesores')
 
-def Eliminar_curso(request, idCurso):
-    curso = get_object_or_404(Curso, idCurso=idCurso)
+def Eliminar_curso(request, idCurso): 
+    curso = get_object_or_404(Curso, idCurso=idCurso) # con el id del podemos elimniar de la base de datos
     curso.delete()
     return redirect('lista_cursos')
 
@@ -110,3 +110,4 @@ def Eliminar_asignatura(request, idClases):
     clases = get_object_or_404(Clases, idClases=idClases)
     clases.delete()
     return redirect('lista_asignaturas')
+
