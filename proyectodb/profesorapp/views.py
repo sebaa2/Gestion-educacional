@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from appproject.models import Profesor, Estudiante, Calificacion
+from appproject.models import Profesor, Estudiante, Calificacion, Clases
 from appproject.forms import LoginForm, CalificacionForm
 
 def login_profesor(request):
@@ -14,6 +14,7 @@ def login_profesor(request):
             if user.contraseña == password:
                 request.session['autenticado'] = True 
                 request.session['usuario'] = user.rut 
+                request.session['usuario_id'] = user.idProfesor
                 request.session['nombre_completo'] = user.nombre +" "+ user.apellido
                 #Redireccionamos a lista de gestiones
                 return redirect("/Panel_profesor")
@@ -44,3 +45,15 @@ def agregar_calificacion(request):
         form = CalificacionForm()
 
     return render(request, 'Agregar_calificacion.html', {'form': form})
+
+def clases_del_profesor(request):
+    # Verifica si el profesor está autenticado
+    if not request.session.get('autenticado'):
+        return redirect('ruta_de_login')  # Redirige al login si no está autenticado
+
+    profesor_id = request.session.get('usuario_id')
+    
+    # Obtén las clases asociadas al profesor logueado
+    clases = Clases.objects.filter(profesor_id=profesor_id)
+
+    return render(request, 'ejemplo.html', {'clases': clases})
