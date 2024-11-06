@@ -1,4 +1,5 @@
-{% extends "./Base.html" %}
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +31,7 @@
     </style>
 </head>
 <body>
-    <h1>Clases Asignadas</h1>
+    <h1>Clases Asignadas a {{ profesor.nombre }} {{ profesor.apellido }}</h1>
     <div class="container">
         {% for clase in clases %}
             <div class="card">
@@ -38,7 +39,7 @@
                 <p>Fecha de Matrícula: {{ clase.fecha_matricula }}</p>
             </div>
         {% empty %}
-            <p>No tienes clases asignadas.</p>
+            <p>No hay clases asignadas para este profesor.</p>
         {% endfor %}
     </div>
 </body>
