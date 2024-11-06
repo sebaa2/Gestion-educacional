@@ -69,7 +69,7 @@ class AgregarProfesor(forms.ModelForm):
             'correo': 'Correo Electrónico',
             'rut': 'RUT',
             'contraseña': 'Contraseña',
-            'matricula': 'Matricula ',
+            'matricula': 'fecha de Contrato',
         }
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
