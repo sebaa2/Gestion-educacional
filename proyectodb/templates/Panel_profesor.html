@@ -94,10 +94,20 @@
     <div class="col-6">
         <a href="{% url 'clases_profesor' %}">
             <div class="card m-1 ">
-                <center><img src="{% static 'imagenes/calificaciones.png' %}" alt="" style="width: 200px; height: auto;"></center>
-                <h5 style="text-align: center;">Agregar calificaciones</h5>
+                <center><img src="{% static 'imagenes/asignaturas.png' %}" alt="" style="width: 200px; height: auto;"></center>
+                <h5 style="text-align: center;">Consultar asignaturas</h5>
             </div>
         </a>
     </div>
+    <div class="col-6">
+        <a href="{% url 'clases_profesor' %}">
+            <div class="card m-1 ">
+                <center><img src="{% static 'imagenes/calificaciones.png' %}" alt="" style="width: 200px; height: auto;"></center>
+                <h5 style="text-align: center;">Agregar Notas</h5>
+            </div>
+        </a>
+    </div>
+
+
 </div>
 {% endblock %}
