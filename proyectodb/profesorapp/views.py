@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from appproject.models import Profesor, Estudiante, Calificacion, Clases
+from appproject.models import Profesor, Estudiante, Calificacion, Clases, Curso
 from appproject.forms import LoginForm, CalificacionForm
 
 def login_profesor(request):
@@ -56,4 +56,18 @@ def clases_del_profesor(request):
     # Obtén las clases asociadas al profesor logueado
     clases = Clases.objects.filter(profesor_id=profesor_id)
 
-    return render(request, 'ejemplo.html', {'clases': clases})
+    return render(request, 'Plantillas_asignaturas.html', {'clases': clases})
+
+def cursos_del_profesor(request):
+    if not request.session.get('autenticado'):
+        return redirect('ruta_de_login')  # Redirige al login si no está autenticado
+    
+    profesor_id = request.session.get('usuario_id')
+    
+    # Filtrar los cursos que tienen clases asignadas a este profesor
+    cursos = Curso.objects.filter(clases__profesor_id=profesor_id).distinct()
+    
+    # Imprimir los cursos para verificar
+    print(cursos)  # Verifica que la lista no esté vacía
+    
+    return render(request, 'Plantillas_curso.html', {'cursos': cursos})
