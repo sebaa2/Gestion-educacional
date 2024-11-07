@@ -45,9 +45,6 @@ class Estudiante(models.Model):
     contraseña = models.CharField(max_length=200)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE, default='Sin asignar')
 
-    class Meta:
-        managed = False
-        db_table = 'appproject_estudiante'
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
 
