@@ -6,7 +6,7 @@
     <div class="row">
         {% for clase in clases %}
             <div class="col-md-4 mb-4">
-                <a href="{% url 'agregar_calificacion'  %}" class="text-decoration-none">
+                <a href="{% url 'agregar_calificacion' clase.idClases %}" class="text-decoration-none">
                     <div class="card h-100 bg-light border-0 shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">{{ clase.nombre }}</h5>

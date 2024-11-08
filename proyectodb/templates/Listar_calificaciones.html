@@ -1,0 +1,37 @@
+{% extends "./Base.html" %}
+<title>Listado de Calificaciones</title>
+{% block body %}
+<h2>Calificaciones ingresadas por {{ nombre_completo }}</h2>
+<a type="button" class="btn btn-primary" href="/clases_profesor">Agregar</a>
+<div class="container mt-4">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Asignatura</th>
+                <th>Estudiante</th>
+                <th>Curso</th>
+                <th>Nota</th>
+                <th>Fecha Registro</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for calificacion in calificaciones %}
+            <tr>
+                <td>{{ calificacion.clase.nombre }}</td>
+                <td>{{ calificacion.estudiante.nombre }} {{ calificacion.estudiante.apellido }}</td>
+                <td>{{ calificacion.curso.nombre }}</td>
+                <td>{{ calificacion.nota }}</td>
+                <td>{{ calificacion.fecha_registro }}</td>
+                <td><a href=# class="btn btn-danger">Eliminar</a>
+                    <a href=# class="btn btn-warning">Actualizar</a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No se encontraron calificaciones registradas.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

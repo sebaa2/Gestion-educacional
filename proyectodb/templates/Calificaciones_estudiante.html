@@ -1,0 +1,31 @@
+{% extends "./Base.html" %}
+<title>Mis Calificaciones</title>
+{% block body %}
+<h2>Calificaciones</h2>
+
+{% if calificaciones %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Asignatura</th>
+                <th>Nota</th>
+                <th>Fecha de Registro</th>
+                <th>Profesor</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for calificacion in calificaciones %}
+            <tr>
+                <td>{{ calificacion.clase.nombre }}</td>
+                <td>{{ calificacion.nota }}</td>
+                <td>{{ calificacion.fecha_registro }}</td>
+                <td>{{ calificacion.profesor.nombre }} {{ calificacion.profesor.apellido }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No tienes calificaciones registradas.</p>
+{% endif %}
+
+{% endblock %}

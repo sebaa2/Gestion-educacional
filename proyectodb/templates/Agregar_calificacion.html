@@ -4,6 +4,8 @@
 <h2>Agregar Calificaciones</h2>
 <form method="post">
     {% csrf_token %}
+    <p>Asignatura: {{ clase.nombre }}</p>
+    <p>Profesor: {{ nombre_completo }}</p>
     {{ form.as_p }}
     <button type="submit" class="btn btn-primary">Guardar</button>
 </form>

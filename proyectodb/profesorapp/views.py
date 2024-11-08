@@ -35,16 +35,33 @@ def logout_profesor(request):
     return redirect('login_profesor')
 
 #cambios en este metodo enfocado en las notas, falta testeo 
-def agregar_calificacion(request):
+def agregar_calificacion(request, clase_id):
+    # Verificar si el profesor está autenticado
+    if not request.session.get('autenticado'):
+        return redirect('login_profesor')
+
+    # Obtener el profesor y la clase seleccionada
+    profesor_id = request.session.get('usuario_id')
+    profesor = get_object_or_404(Profesor, idProfesor=profesor_id)
+    clase = get_object_or_404(Clases, idClases=clase_id, profesor=profesor)
+
     if request.method == 'POST':
         form = CalificacionForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('/Panel_profesor')  # Redirige a la vista deseada
+            calificacion = form.save(commit=False)
+            calificacion.profesor = profesor
+            calificacion.clase = clase  # Asignar la clase automáticamente
+            calificacion.save()
+            return redirect('listar_calificaciones')  # Redirigir al listado de clases
+
     else:
         form = CalificacionForm()
 
-    return render(request, 'Agregar_calificacion.html', {'form': form})
+    return render(request, 'Agregar_calificacion.html', {
+        'form': form,
+        'clase': clase,
+        'nombre_completo': request.session.get('nombre_completo'),
+    })
 
 def clases_del_profesor(request):
     # Verifica si el profesor está autenticado
@@ -71,3 +88,21 @@ def cursos_del_profesor(request):
     print(cursos)  # Verifica que la lista no esté vacía
     
     return render(request, 'Plantillas_curso.html', {'cursos': cursos})
+
+def listar_calificaciones(request):
+    # Verifica si el profesor está autenticado
+    if not request.session.get('autenticado'):
+        return redirect('ruta_de_login')
+
+    # Obtener el ID del profesor desde la sesión
+    profesor_id = request.session.get('usuario_id')
+
+    # Filtrar las calificaciones ingresadas por el profesor
+    calificaciones = Calificacion.objects.filter(profesor_id=profesor_id).select_related('estudiante', 'clase', 'curso')
+
+    return render(request, 'Listar_calificaciones.html', {
+        'calificaciones': calificaciones,
+        'nombre_completo': request.session.get('nombre_completo'),
+    })
+
+

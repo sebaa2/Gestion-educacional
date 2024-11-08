@@ -8,23 +8,14 @@ class LoginForm(forms.Form):
 class CalificacionForm(forms.ModelForm):
     class Meta:
         model = Calificacion
-        fields = ['nota', 'fecha_registro', 'estudiante', 'profesor', 'clase', 'curso']
-        widgets = {
-            'curso': forms.Select(attrs={'class': 'form-control'}),
-            'profesor': forms.Select(attrs={'class': 'form-control'}),
-            'clase': forms.Select(attrs={'class': 'form-control'}),
-            'estudiante': forms.Select(attrs={'class': 'form-control'}),
-            'fecha_registro': forms.DateInput(attrs={'type': 'date'}),
-            'nota': forms.NumberInput(attrs={'step': '0.1', 'min': '0', 'max': '10'}),
-        }
+        fields = ['nota', 'fecha_registro', 'estudiante', 'curso']
         labels = {
-            'nota': 'Nota',
-            'fecha_registro': 'Fecha de Registro',
-            'estudiante': 'Estudiante',
-            'profesor': 'Profesor',
-            'clase': 'Clase',
-            'curso': 'Curso',
+            'fecha_registro': 'Fecha de registro: '
         }
+        widgets = {
+            'fecha_registro': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'})
+        }
+        
 class AgregarEstudiantes(forms.ModelForm):
     class Meta:  # Definir la clase Meta para vincular el modelo
         model = Estudiante

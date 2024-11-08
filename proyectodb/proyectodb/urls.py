@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from profesorapp.views import login_profesor, panel_profesor, agregar_calificacion, logout_profesor, clases_del_profesor, cursos_del_profesor
+from profesorapp.views import login_profesor, panel_profesor, agregar_calificacion, logout_profesor, clases_del_profesor, cursos_del_profesor, listar_calificaciones
 from adminapp.views import login_admin, panel_administrador, logout_admin, Registrar_estudiantesForm, Registrar_profesorForm, lista_profesores, agregar_curso, lista_cursos, agregar_asignatura, lista_asignaturas, lista_estudiantes, Eliminar_estudiantes, Eliminar_profesor, Eliminar_curso, Eliminar_asignatura
-from appproject.views import Principal, login_view, panel_estudiantes, logout, panel_asignaturas_estudiante
+from appproject.views import Principal, login_view, panel_estudiantes, logout, panel_asignaturas_estudiante, calificaciones_estudiante
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +28,7 @@ urlpatterns = [
     path('logout_estudiantes/',logout,name="logout_estudiantes"),
     path('Panel_estudiantes/', panel_estudiantes, name="panel_estudiantes"),
     path('panel_estudiantes/<int:idEstudiante>/asignaturas/', panel_asignaturas_estudiante, name='panel_asignaturas_estudiante'),
+    path('mis_calificaciones/', calificaciones_estudiante, name='mis_calificaciones'),
     #acciones del admin
     path('Login_admin/', login_admin, name="Login_admin"),
     path('Panel_admin/', panel_administrador, name="Panel_admin"),
@@ -48,8 +49,9 @@ urlpatterns = [
     path('Login_profesor/', login_profesor, name='login_profesor'),
     path('Logout_profesor/', logout_profesor, name='logout_profesor'),
     path('Panel_profesor/', panel_profesor, name='panel_profesor'),
-    path('Agregar_calificacion/', agregar_calificacion, name="agregar_calificacion"),
+    path('Agregar_calificacion/<int:clase_id>/', agregar_calificacion, name="agregar_calificacion"),
     path('clases_profesor/', clases_del_profesor, name='clases_profesor'),
     path('cursos_profesor/', cursos_del_profesor, name='cursos_profesor'),
+    path('listar_calificaciones/', listar_calificaciones, name='listar_calificaciones'),
 
 ]

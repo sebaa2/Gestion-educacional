@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Estudiante
+from .models import Estudiante, Calificacion
 from datetime import datetime, timezone
 from .forms import LoginForm 
     
@@ -20,7 +20,8 @@ def login_view(request):
             #En caso de que la contraseña ingresada sea igual a la contraseña almacenada
             if user.contraseña == password:
                 request.session['autenticado'] = True 
-                request.session['usuario'] = user.rut 
+                request.session['usuario'] = user.rut
+                request.session['usuario_id'] = user.idEstudiante 
                 request.session['nombre_completo'] = user.nombre +" "+ user.apellido
                 #Redireccionamos a lista de gestiones
                 return redirect("panel_estudiantes")
@@ -55,3 +56,14 @@ def panel_asignaturas_estudiante(request, idEstudiante):
     }
 
     return render(request, 'panel_asignaturas_estudiante.html', context)
+
+def calificaciones_estudiante(request):
+    # Verificamos si el estudiante está autenticado
+    if not request.session.get('autenticado'):
+        return redirect('ruta_de_login')  # Redirigir al login si no está autenticado
+
+    estudiante_id = request.session.get('usuario_id')  # Obtenemos el id del estudiante
+    calificaciones = Calificacion.objects.filter(estudiante_id=estudiante_id)
+
+    return render(request, 'Calificaciones_estudiante.html', {'calificaciones': calificaciones})
+
