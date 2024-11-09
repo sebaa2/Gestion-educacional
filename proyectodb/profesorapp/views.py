@@ -1,6 +1,10 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from appproject.models import Profesor, Estudiante, Calificacion, Clases, Curso
 from appproject.forms import LoginForm, CalificacionForm
+from django.urls import reverse
+
+def Principal(request):
+    return render(request, 'Principal.html')
 
 def login_profesor(request):
     form = LoginForm(request.POST)
@@ -22,7 +26,7 @@ def login_profesor(request):
                 form.add_error(None, 'Contraseña incorrecta')
         except Profesor.DoesNotExist:
             form.add_error(None, 'Usuario no existe')
-    return render(request, "Login_profesor.html", {"form": form})
+    return render(request, "Login_profesor.html", {"form": form, 'title': 'login_profesor', 'home_url': '/'})
 
 def panel_profesor(request):
     #Verificamos si la variable de autenticacion existe
@@ -60,7 +64,8 @@ def agregar_calificacion(request, clase_id):
     return render(request, 'Agregar_calificacion.html', {
         'form': form,
         'clase': clase,
-        'nombre_completo': request.session.get('nombre_completo'),
+        'nombre_completo': request.session.get('nombre_completo'),'title':'panel_profesor',
+        'home_url':reverse('panel_profesor')
     })
 
 def clases_del_profesor(request):
@@ -73,7 +78,8 @@ def clases_del_profesor(request):
     # Obtén las clases asociadas al profesor logueado
     clases = Clases.objects.filter(profesor_id=profesor_id)
 
-    return render(request, 'Plantillas_asignaturas.html', {'clases': clases})
+    return render(request, 'Plantillas_asignaturas.html', {'clases': clases, 'title':'panel_profesor',
+        'home_url':reverse('panel_profesor')})
 
 def cursos_del_profesor(request):
     if not request.session.get('autenticado'):
@@ -87,7 +93,8 @@ def cursos_del_profesor(request):
     # Imprimir los cursos para verificar
     print(cursos)  # Verifica que la lista no esté vacía
     
-    return render(request, 'Plantillas_curso.html', {'cursos': cursos})
+    return render(request, 'Plantillas_curso.html', {'cursos': cursos ,'title':'panel_profesor',
+        'home_url':reverse('panel_profesor')})
 
 def listar_calificaciones(request):
     # Verifica si el profesor está autenticado
@@ -102,7 +109,8 @@ def listar_calificaciones(request):
 
     return render(request, 'Listar_calificaciones.html', {
         'calificaciones': calificaciones,
-        'nombre_completo': request.session.get('nombre_completo'),
+        'nombre_completo': request.session.get('nombre_completo'),'title':'panel_profesor',
+        'home_url':reverse('panel_profesor')
     })
 
 def Eliminar_calificacion(request, idCalificacion):

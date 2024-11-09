@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from .models import Estudiante, Calificacion
 from datetime import datetime, timezone
 from .forms import LoginForm 
-    
+from django.urls import reverse
 def Principal(request):
     return render(request, 'Principal.html')
 
@@ -29,7 +29,7 @@ def login_view(request):
                 form.add_error(None, 'Contraseña incorrecta')
         except Estudiante.DoesNotExist:
             form.add_error(None, 'Usuario no existe')
-    return render(request, 'login_estudiantes.html', {'form': form})
+    return render(request, 'login_estudiantes.html', {'form': form, 'title': 'login_estudiante', 'home_url': '/'})
 
 
 def logout(request):

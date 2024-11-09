@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse
 from appproject.models import Administrador, Estudiante, Profesor, Curso, Clases
 from appproject.forms import LoginForm, AgregarEstudiantes, AgregarProfesor, AgregarCursoForm, AgregarAsignaturas
 from django.http import HttpResponse
@@ -24,7 +25,7 @@ def login_admin(request):
                 form.add_error(None, 'Contraseña incorrecta')
         except Administrador.DoesNotExist:
             form.add_error(None, 'Usuario no existe')
-    return render(request, "Login_admin.html", {"form": form})
+    return render(request, "Login_admin.html", {"form": form,'title': 'login_admin', 'home_url': '/'})
 
 def logout_admin(request):
     request.session.pop('autenticado',None)
@@ -47,7 +48,7 @@ def agregar_asignatura(request):
             return redirect('lista_asignaturas')  # Cambia a la URL correspondiente
     else:
         form = AgregarAsignaturas()  # Crea un formulario vacío
-    return render(request, 'Agregar_asignatura.html', {'form': form})
+    return render(request, 'Agregar_asignatura.html', {'form': form, 'title': 'Panel_admin','home_url':reverse('Panel_admin')})
 
 def lista_cursos(request):
     cursos = Curso.objects.all()  # Obtiene todos los cursos de la base de datos
@@ -61,7 +62,7 @@ def agregar_curso(request):
             return redirect('lista_cursos')  # Cambia a la URL correspondiente
     else:
         form = AgregarCursoForm()  # Crea un formulario vacío
-    return render(request, 'Agregar_curso.html', {'form': form})
+    return render(request, 'Agregar_curso.html', {'form': form,'title': 'Panel_admin','home_url':reverse('Panel_admin')})
 
 def lista_estudiantes(request):
     estudiantes = Estudiante.objects.all()
@@ -75,11 +76,11 @@ def Registrar_estudiantesForm(request):
             return redirect('lista_estudiantes')  # Redirige a una página de éxito u otra vista
     else:
         form = AgregarEstudiantes()  # Instancia un formulario vacío
-    return render(request, 'Agregar_estudiantes.html', {'form': form})
+    return render(request, 'Agregar_estudiantes.html', {'form': form, 'title': 'Panel_admin','home_url':reverse('Panel_admin')})
 
 def lista_profesores(request):
     profesores = Profesor.objects.all()  # Obtén todos los profesores
-    return render(request, 'Lista_profesores.html', {'profesores': profesores})
+    return render(request, 'Lista_profesores.html', {'profesores': profesores, 'title': 'Panel_admin','home_url':reverse('Panel_admin')})
 
 def Registrar_profesorForm(request):
     if request.method == 'POST':
@@ -89,12 +90,12 @@ def Registrar_profesorForm(request):
             return redirect('Lista_profesores')  # Redirige a la lista de profesores o a otra vista
     else:
         form = AgregarProfesor()  # Instancia un formulario vacío
-    return render(request, 'agregar_profesor.html', {'form': form})
+    return render(request, 'agregar_profesor.html', {'form': form, 'title': 'Panel_admin','home_url':reverse('Panel_admin')})
 
 def Eliminar_estudiantes(request, idEstudiante):
     estudiante = get_object_or_404(Estudiante, idEstudiante=idEstudiante)
     estudiante.delete()
-    return redirect('lista_estudiantes')
+    return redirect('lista_estudiantes',{'title': 'Panel_admin','home_url':reverse('Panel_admin')})
 
 def Eliminar_profesor(request, idProfesor):
     profesor = get_object_or_404(Profesor, idProfesor=idProfesor)
@@ -104,10 +105,10 @@ def Eliminar_profesor(request, idProfesor):
 def Eliminar_curso(request, idCurso): 
     curso = get_object_or_404(Curso, idCurso=idCurso) # con el id del podemos elimniar de la base de datos
     curso.delete()
-    return redirect('lista_cursos')
+    return redirect('lista_cursos',{'title': 'Panel_admin','home_url':reverse('Panel_admin')})
 
 def Eliminar_asignatura(request, idClases):
     clases = get_object_or_404(Clases, idClases=idClases)
     clases.delete()
-    return redirect('lista_asignaturas')
+    return redirect('lista_asignaturas',{'title': 'Panel_admin','home_url':reverse('Panel_admin')})
 
