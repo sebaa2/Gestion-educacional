@@ -105,4 +105,9 @@ def listar_calificaciones(request):
         'nombre_completo': request.session.get('nombre_completo'),
     })
 
+def Eliminar_calificacion(request, idCalificacion):
+    calificacion = get_object_or_404(Calificacion, idCalificacion=idCalificacion)
+    calificacion.delete()
+    return redirect('listar_calificaciones')
+
 

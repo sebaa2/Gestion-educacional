@@ -20,10 +20,10 @@
             <tr>
                 <td>{{ calificacion.clase.nombre }}</td>
                 <td>{{ calificacion.estudiante.nombre }} {{ calificacion.estudiante.apellido }}</td>
-                <td>{{ calificacion.curso.nombre }}</td>
+                <td>{{ calificacion.curso.nombre_curso }}</td>
                 <td>{{ calificacion.nota }}</td>
                 <td>{{ calificacion.fecha_registro }}</td>
-                <td><a href=# class="btn btn-danger">Eliminar</a>
+                <td><a href="{% url 'Eliminarcalificacion' calificacion.idCalificacion %}" class="btn btn-danger">Eliminar</a>
                     <a href=# class="btn btn-warning">Actualizar</a></td>
             </tr>
             {% empty %}

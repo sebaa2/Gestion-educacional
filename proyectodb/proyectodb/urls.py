@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from profesorapp.views import login_profesor, panel_profesor, agregar_calificacion, logout_profesor, clases_del_profesor, cursos_del_profesor, listar_calificaciones
+from profesorapp.views import login_profesor, panel_profesor, agregar_calificacion, logout_profesor, clases_del_profesor, cursos_del_profesor, listar_calificaciones, Eliminar_calificacion
 from adminapp.views import login_admin, panel_administrador, logout_admin, Registrar_estudiantesForm, Registrar_profesorForm, lista_profesores, agregar_curso, lista_cursos, agregar_asignatura, lista_asignaturas, lista_estudiantes, Eliminar_estudiantes, Eliminar_profesor, Eliminar_curso, Eliminar_asignatura
 from appproject.views import Principal, login_view, panel_estudiantes, logout, panel_asignaturas_estudiante, calificaciones_estudiante
 
@@ -53,5 +53,5 @@ urlpatterns = [
     path('clases_profesor/', clases_del_profesor, name='clases_profesor'),
     path('cursos_profesor/', cursos_del_profesor, name='cursos_profesor'),
     path('listar_calificaciones/', listar_calificaciones, name='listar_calificaciones'),
-
+    path('listar_calificaciones/Eliminarcalificaion/<int:idCalificacion>', Eliminar_calificacion, name='Eliminarcalificacion'),
 ]
