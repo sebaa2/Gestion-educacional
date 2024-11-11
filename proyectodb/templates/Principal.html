@@ -1,67 +1,112 @@
-{% extends "./Base.html" %}
+{% extends "./Base_inicio.html" %}
 {% load static %}
 {% block body %}
 <title>Principal</title>
-<body style="background-color: #4CAF50;">
+<header>
+    <h1 style="text-align: center;">Nombre del colegio</h1>
+    <p style="text-align: center;">Bienvenido a tu espacio academico</p>
+</header>
+<br>
+<body style="background-color: #f8f9fa;">
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="row align-items-center">
-            <!-- Columna de la imagen -->
-            <div class="col-md-6 text-center">
-                <img src="{% static 'imagenes/ll.png' %}" class="img-fluid" alt="Smiling woman with books" style="border: 5px solid #000000; padding: 0.1px;">
-            </div>
-            <!-- Columna del contenido -->
-            <div class="col-md-6 text-center" style="background-color: #f3e07f; border: 5px solid #000000; padding: 10px; border-radius: 30px;">
-                <h1 class="display-4" style="color: rgb(0, 0, 0);">Te damos la bienvenida</h1>
-                <h5 style="color: rgb(0, 0, 0);">¿Qué eres?</h5>
-                <div class="d-grid gap-3 col-8 mx-auto">
-                    <a class="btn btn-primary btn-lg rounded-pill" href="Login_estudiante/">Alumno</a>
-                    <a class="btn btn-primary btn-lg rounded-pill" href="Login_profesor/">Profesor</a>
-                    <a class="btn btn-primary btn-lg rounded-pill" href="Login_admin/">Administrador</a>
+
+            <div class="container-fluid p-0">
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="{% static 'imagenes/salaclases1.png' %}" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Sala de clases 1">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{% static 'imagenes/salaclases2.png' %}" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Sala de clases 2">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{% static 'imagenes/salaclases3.png' %}" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Sala de clases 3">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
             </div>
-        </div>
-    </div>
-    <br>
-    <div  class="text-center" style="background-color: #222;">
-    <div class="container" style="background-color: #222;;">
-        <div class="row" style="background-color: #222;;">
-            <!-- Primera columna -->
-            <div class="col-md-4 text-center" style="background-color: #222;;">
-                <h5 style="color: #fff;">Escuela ABC</h5>
-                <p style="color: #fff;">Calle Falsa 123, Ciudad, País</p>
-                <p style="color: #fff;">Teléfono: (123) 456-7890</p>
-                <p style="color: #fff;">Email: contacto@escuelaabc.com</p>
-            </div>
             
-            <!-- Segunda columna -->
-            <div class="col-md-4 text-center">
-                <h5>Enlaces Rápidos</h5>
-                <ul style="list-style-type: none; padding-left: 0;">
-                    <li><a href="/" style="color: #fff; text-decoration: none;">Inicio</a></li>
-                    <li><a href="/nosotros" style="color: #fff; text-decoration: none;">Nosotros</a></li>
-                    <li><a href="/cursos" style="color: #fff; text-decoration: none;">Cursos</a></li>
-                    <li><a href="/contacto" style="color: #fff; text-decoration: none;">Contacto</a></li>
-                </ul>
-            </div>
-            
-            <!-- Tercera columna -->
-            <div class="col-md-4 text-center">
-                <h5>Síguenos</h5>
-                <a href="https://www.facebook.com" style="color: #fff; text-decoration: none; margin-right: 15px;">
-                    <img src="{% static 'imagenes/facebook-icon.png' %}" alt="Facebook" style="width: 30px;">
-                </a>
-                <a href="https://www.twitter.com" style="color: #fff; text-decoration: none; margin-right: 15px;">
-                    <img src="{% static 'imagenes/twitter-icon.png' %}" alt="Twitter" style="width: 30px;">
-                </a>
-                <a href="https://www.instagram.com" style="color: #fff; text-decoration: none;">
-                    <img src="{% static 'imagenes/instagram-icon.png' %}" alt="Instagram" style="width: 30px;">
-                </a>
-            </div>
-        </div>
+<div class="container my-5">
+
+    <footer class="text-center text-white" style="background-color: #f1f1f1;">
+    <div class="container pt-4">
+      <section class="mb-4">
+        <!-- Facebook -->
+        <a
+          class="btn btn-link btn-floating btn-lg text-dark m-1"
+          href="#!"
+          role="button"
+          data-mdb-ripple-color="dark"
+          ><i class="fab fa-facebook-f"></i
+        ></a>
+  
+        <!-- Twitter -->
+        <a
+          class="btn btn-link btn-floating btn-lg text-dark m-1"
+          href="#!"
+          role="button"
+          data-mdb-ripple-color="dark"
+          ><i class="fab fa-twitter"></i
+        ></a>
+  
+        <!-- Google -->
+        <a
+          class="btn btn-link btn-floating btn-lg text-dark m-1"
+          href="#!"
+          role="button"
+          data-mdb-ripple-color="dark"
+          ><i class="fab fa-google"></i
+        ></a>
+  
+        <!-- Instagram -->
+        <a
+          class="btn btn-link btn-floating btn-lg text-dark m-1"
+          href="#!"
+          role="button"
+          data-mdb-ripple-color="dark"
+          ><i class="fab fa-instagram"></i
+        ></a>
+  
+        <!-- Linkedin -->
+        <a
+          class="btn btn-link btn-floating btn-lg text-dark m-1"
+          href="#!"
+          role="button"
+          data-mdb-ripple-color="dark"
+          ><i class="fab fa-linkedin"></i
+        ></a>
+        <!-- Github -->
+        <a
+          class="btn btn-link btn-floating btn-lg text-dark m-1"
+          href="#!"
+          role="button"
+          data-mdb-ripple-color="dark"
+          ><i class="fab fa-github"></i
+        ></a>
+      </section>
     </div>
-    <div class="text-center" style="background-color: #222; padding: 10px;">
-        <p class="mb-0" style="color: #fff;">&copy; 2024 Escuela ABC. Todos los derechos reservados.</p>
+    
+    <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2020 Copyright:
+      <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
     </div>
-    </div>    
+  </footer>
+    
+  </div>
+    </div>
 </body>
 {% endblock %}
