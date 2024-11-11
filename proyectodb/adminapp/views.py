@@ -38,7 +38,7 @@ def panel_administrador(request,):
 
 def lista_asignaturas(request):
     asignaturas = Clases.objects.all()  # Obtiene todos los cursos de la base de datos
-    return render(request, 'Lista_asignaturas.html', {'asignaturas': asignaturas})
+    return render(request, 'Lista_asignaturas.html', {'asignaturas': asignaturas, 'title': 'Panel_admin','home_url':reverse('Panel_admin')})
 
 def agregar_asignatura(request):
     if request.method == 'POST':
