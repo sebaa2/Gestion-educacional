@@ -1,112 +1,187 @@
-{% extends "./Base_inicio.html" %}
+{% extends "./Base.html" %}
 {% load static %}
 {% block body %}
-<title>Principal</title>
-<header>
-    <h1 style="text-align: center;">Nombre del colegio</h1>
-    <p style="text-align: center;">Bienvenido a tu espacio academico</p>
-</header>
-<br>
-<body style="background-color: #f8f9fa;">
-    <div class="container d-flex justify-content-center align-items-center min-vh-100">
-        <div class="row align-items-center">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Base</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#fcfaf8] font-sans">
 
-            <div class="container-fluid p-0">
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    </div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="{% static 'imagenes/salaclases1.png' %}" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Sala de clases 1">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% static 'imagenes/salaclases2.png' %}" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Sala de clases 2">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% static 'imagenes/salaclases3.png' %}" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Sala de clases 3">
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
-            
-<div class="container my-5">
+<!-- Navbar -->
+<nav class="bg-white border-b border-gray-200">
+    <div class="container mx-auto flex items-center justify-between px-6 py-4">
+        <a href="#" class="flex items-center text-gray-800 font-bold text-lg">
+            <svg width="24" height="24" fill="currentColor" class="mr-2" viewBox="0 0 16 16">
+                <path d="M6.5 10.995V14.5a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-3.505h3.5a.5.5 0 0 0 .5-.5V7.645l-6-5.333L2.5 7.645v2.85a.5.5 0 0 0 .5.5h3.5Z"/>
+                <path d="m13 2.5-.007.354-.25.707L8 6.793 3.257 3.561l-.25-.707L3 2.5V1h10v1.5Z"/>
+            </svg>
+            Inicio
+        </a>
+        <div class="flex space-x-6">
+            <a href="#" class="text-gray-600">Quiénes somos</a>
+            <a href="#" class="text-gray-600">Nuestro objetivo</a>
+            <a href="#" class="text-gray-600">Comunidad</a>
+           
+        </div>
+  
+    </div>
+</nav>
 
-    <footer class="text-center text-white" style="background-color: #f1f1f1;">
-    <div class="container pt-4">
-      <section class="mb-4">
-        <!-- Facebook -->
-        <a
-          class="btn btn-link btn-floating btn-lg text-dark m-1"
-          href="#!"
-          role="button"
-          data-mdb-ripple-color="dark"
-          ><i class="fab fa-facebook-f"></i
-        ></a>
-  
-        <!-- Twitter -->
-        <a
-          class="btn btn-link btn-floating btn-lg text-dark m-1"
-          href="#!"
-          role="button"
-          data-mdb-ripple-color="dark"
-          ><i class="fab fa-twitter"></i
-        ></a>
-  
-        <!-- Google -->
-        <a
-          class="btn btn-link btn-floating btn-lg text-dark m-1"
-          href="#!"
-          role="button"
-          data-mdb-ripple-color="dark"
-          ><i class="fab fa-google"></i
-        ></a>
-  
-        <!-- Instagram -->
-        <a
-          class="btn btn-link btn-floating btn-lg text-dark m-1"
-          href="#!"
-          role="button"
-          data-mdb-ripple-color="dark"
-          ><i class="fab fa-instagram"></i
-        ></a>
-  
-        <!-- Linkedin -->
-        <a
-          class="btn btn-link btn-floating btn-lg text-dark m-1"
-          href="#!"
-          role="button"
-          data-mdb-ripple-color="dark"
-          ><i class="fab fa-linkedin"></i
-        ></a>
-        <!-- Github -->
-        <a
-          class="btn btn-link btn-floating btn-lg text-dark m-1"
-          href="#!"
-          role="button"
-          data-mdb-ripple-color="dark"
-          ><i class="fab fa-github"></i
-        ></a>
-      </section>
+<!-- contedor central -->
+<div class="bg-cover bg-center h-[480px] flex items-center justify-center text-center" style="background-image: url('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=2073&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+    <div class="bg-black bg-opacity-50 p-8 rounded-lg text-white">
+        <h1 class="text-4xl font-bold">Moderniza la Enseñanza, Simplifica la Gestión</h1>
+        <p class="mt-2">Facilita la administración escolar y acerca la tecnología a todos tus estudiantes.</p>
+        <div class="mt-6 flex">
+            <input type="text" placeholder="Busqueda avanzada" class="p-3 rounded-l-lg w-full">
+            <button class="bg-yellow-500 text-gray-800 px-4 rounded-r-lg">Buscar</button>
+        </div>
+    </div>
+</div>
+
+<!-- botones -->
+<div class="container mx-auto my-6 flex justify-center space-x-4">
+    <a href="Login_estudiante/"><button class="bg-yellow-500 text-gray-800 font-bold py-2 px-4 rounded-lg">Estudiante</button></a>
+    <a href="Login_profesor/"><button class="bg-yellow-500 text-gray-800 font-bold py-2 px-4 rounded-lg">Profesor</button></a>
+    <a href="Login_admin/"><button class="bg-yellow-500 text-gray-800 font-bold py-2 px-4 rounded-lg">Administrador</button></a>
+</div>
+
+<!-- Título de la sección -->
+<h3 class="text-lg font-bold mb-4">¿Sabías que...?</h3>
+
+<!-- Tarjetas de Datos Curiosos -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Tarjeta 1 -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1477764085876-1df3917e052f?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Cocodrilo" class="w-full">
+        <div class="p-4">
+            <h4 class="text-lg font-bold">Los cocodrilos no pueden sacar la lengua</h4>
+            <p class="text-gray-600">A diferencia de nosotros, la lengua de los cocodrilos está adherida a la parte inferior de su boca.</p>
+        </div>
     </div>
     
-    <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-      © 2020 Copyright:
-      <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+    <!-- Tarjeta 2 -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1553054366-ebbf4296eb32?q=80&w=1858&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Tigre" class="w-full">
+        <div class="p-4">
+            <h4 class="text-lg font-bold">Los tigres tienen la piel rayada</h4>
+            <p class="text-gray-600">No solo su pelaje es rayado; ¡también su piel! Cada tigre tiene un patrón único, como nuestras huellas dactilares.</p>
+        </div>
     </div>
-  </footer>
     
+    <!-- Tarjeta 3 -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1526226128118-9ef71fc2f34b?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Elefante" class="w-full">
+        <div class="p-4">
+            <h4 class="text-lg font-bold">El elefante es el único animal que no puede saltar</h4>
+            <p class="text-gray-600">Aunque son fuertes y grandes, su peso y la estructura de sus patas no les permiten saltar.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-body-tertiary text-muted">
+  <!-- Section: Social media -->
+  <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+    <!-- Left -->
+    <div class="me-5 d-none d-lg-block">
+      <span>Encuéntranos en redes sociales</span>
+    </div>
+    <!-- Left -->
+
+    <!-- Right -->
+    <div>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </div>
+    <!-- Right -->
+  </section>
+  <!-- Section: Social media -->
+
+  <!-- Section: Links  -->
+  <section class="">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            <i class="fas fa-gem me-3"></i>Nombre empresa
+          </h6>
+          <p>
+            Agregar descripción
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Sugerencias
+          </h6>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Ayuda
+          </h6>
+          <p>
+            <a href="#!" class="text-reset">Soporte técnico</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Ayuda para padres</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">otros</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">Contacto</h6>
+          <p><i class="fas fa-home me-3"></i>Ciudad</p>
+          <p>
+            <i class="fas fa-envelope me-3"></i>
+            info@example.com
+          </p>
+          <p><i class="fas fa-phone me-3"></i> +99828288</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+
+  <!-- Copyright -->
+  <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2021 Copyright:
+    <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
   </div>
-    </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->
+
 </body>
+</html>
+
+
 {% endblock %}

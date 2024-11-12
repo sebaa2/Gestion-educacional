@@ -1,147 +1,44 @@
-
-<title>Panel de estudiantes</title>
 {% load static %}
-{% block body %}
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-</head>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-        header {
-            background-color: #000000;
-            color: white;
-            padding: 15px;
-            text-align: center;
-        }
-        nav {
-            background-color: #333;
-            overflow: hidden;
-        }
-        nav a {
-            float: left;
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 20px;
-            text-decoration: none;
-        }
-        nav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-        main {
-            padding: 20px;
-        }
-        .section-title {
-            margin-top: 20px;
-            color: #000000;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-    </style>
+    <title>Panel de administrador </title>
+    <!-- Enlace al archivo CSS -->
+    <link rel="stylesheet" href="{% static 'disenos/sidebar.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header>
-        <h1>Portal Académico</h1>
-        <p>Bienvenido a tu espacio académico</p>
-    </header>
-    <nav style="display: flex;">
-        <a href="#{% url 'Panel_admin' %}">Inicio</a>
-        <a href="#perfil">Perfil</a>
-        <a href="{% url 'logout_admin' %}">cerrar sesion</a>
-    </nav>
-<div class="alert" role="alert">
-    Usuario : {{ nombre_completo }}
-</div>
-<div class="row h-100">
-    <div class="col-6" >
-        <a href="{% url 'agregar_estudiante' %}"><div class="card m-1 ">
-            <center><img src="{% static 'imagenes/estudiantes.png' %}" alt="" style="width: 200px; height: auto;"></center>
-            <h5 style="text-align: center;">Agregar estudiantes</h5>
-        </div></a>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3>Opciones</h3>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="{% url 'agregar_estudiante' %}"><i class="fas fa-user-plus"></i> Agregar estudiantes</a></li>
+            <li><a href="{% url 'agregar_profesor' %}"><i class="fas fa-chalkboard-teacher"></i> Agregar profesor</a></li>
+            <li><a href="{% url 'agregar_curso' %}"><i class="fas fa-book"></i> Agregar cursos</a></li>
+            <li><a href="{% url 'agregar_asignatura' %}"><i class="fas fa-book-open"></i> Agregar asignaturas</a></li>
+        </ul>
     </div>
-    <div class="col-6">
-        <a href="{% url 'agregar_profesor' %}"><div class="card m-1 ">
-            <center><img src="{% static 'imagenes/profesor.png' %}" alt="" style="width: 200px; height: auto;"></center>
-            <h5 style="text-align: center;">Agregar profesor</h5>
-        </div></a>
-    </div>
-    <div class="col-6">
-        <a href="{% url 'agregar_curso' %}"><div class="card m-1 ">
-            <center><img src="{% static 'imagenes/cursos.png' %}" alt="" style="width: 200px; height: auto;"></center>
-            <h5 style="text-align: center;">Agregar cursos</h5>
-        </div></a>
-    </div>
-    <div class="col-6">
-        <a href="{% url 'agregar_asignatura' %}"><div class="card m-1 ">
-            <center><img src="{% static 'imagenes/asignaturas.png' %}" alt="" style="width: 200px; height: auto;"></center>
-            <h5 style="text-align: center;">Agregar asignaturas</h5>
-        </div></a>
-    </div>
-</div>
-<br>
-<div  class="text-center" style="background-color: #222;">
-    <div class="container" style="background-color: #222;;">
-        <div class="row" style="background-color: #222;;">
-            <!-- Primera columna -->
-            <div class="col-md-4 text-center" style="background-color: #222;;">
-                <h5 style="color: #fff;">Escuela ABC</h5>
-                <p style="color: #fff;">Calle Falsa 123, Ciudad, País</p>
-                <p style="color: #fff;">Teléfono: (123) 456-7890</p>
-                <p style="color: #fff;">Email: contacto@escuelaabc.com</p>
+
+    <!-- Contenido Principal -->
+    <div class="content">
+        <nav class="navbar">
+            <a class="navbar-brand" href="#">Panel de administrador</a>
+            <div class="navbar-right">
+                <a href="{% url 'logout_admin' %}" class="btn">Cerrar sesión</a>
             </div>
-            
-            <!-- Segunda columna -->
-            <div class="col-md-4 text-center">
-                <h5>Enlaces Rápidos</h5>
-                <ul style="list-style-type: none; padding-left: 0;">
-                    <li><a href="/" style="color: #fff; text-decoration: none;">Inicio</a></li>
-                    <li><a href="/nosotros" style="color: #fff; text-decoration: none;">Nosotros</a></li>
-                    <li><a href="/cursos" style="color: #fff; text-decoration: none;">Cursos</a></li>
-                    <li><a href="/contacto" style="color: #fff; text-decoration: none;">Contacto</a></li>
-                </ul>
+        </nav>
+
+        <div class="container">
+            <div class="alert" role="alert">
+                Usuario : {{ nombre_completo }}
             </div>
-            
-            <!-- Tercera columna -->
-            <div class="col-md-4 text-center">
-                <h5>Síguenos</h5>
-                <a href="https://www.facebook.com" style="color: #fff; text-decoration: none; margin-right: 15px;">
-                    <img src="{% static 'imagenes/facebook-icon.png' %}" alt="Facebook" style="width: 30px;">
-                </a>
-                <a href="https://www.twitter.com" style="color: #fff; text-decoration: none; margin-right: 15px;">
-                    <img src="{% static 'imagenes/twitter-icon.png' %}" alt="Twitter" style="width: 30px;">
-                </a>
-                <a href="https://www.instagram.com" style="color: #fff; text-decoration: none;">
-                    <img src="{% static 'imagenes/instagram-icon.png' %}" alt="Instagram" style="width: 30px;">
-                </a>
-            </div>
+            <div class="row">
+
         </div>
     </div>
-    <div class="text-center" style="background-color: #222; padding: 10px;">
-        <p class="mb-0" style="color: #fff;">&copy; 2024 Escuela ABC. Todos los derechos reservados.</p>
-    </div>
-    </div>    
 </body>
-{% endblock %}
+</html>
