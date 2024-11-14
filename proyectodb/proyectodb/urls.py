@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from profesorapp.views import login_profesor, panel_profesor, agregar_calificacion, logout_profesor, clases_del_profesor, cursos_del_profesor, listar_calificaciones, Eliminar_calificacion
+from profesorapp.views import login_profesor, panel_profesor, agregar_calificacion, logout_profesor, clases_del_profesor, cursos_del_profesor, listar_calificaciones, Eliminar_calificacion, subir_documento, asignar_tarea
 from adminapp.views import login_admin, panel_administrador, logout_admin, Registrar_estudiantesForm, Registrar_profesorForm, lista_profesores, agregar_curso, lista_cursos, agregar_asignatura, lista_asignaturas, lista_estudiantes, Eliminar_estudiantes, Eliminar_profesor, Eliminar_curso, Eliminar_asignatura
-from appproject.views import Principal, login_view, panel_estudiantes, logout, panel_asignaturas_estudiante, calificaciones_estudiante
+from appproject.views import Principal, login_view, panel_estudiantes, logout, panel_asignaturas_estudiante, calificaciones_estudiante, horario_estudiante, listar_documentos, descargar_documento, ver_tareas, plantilla_accionesprofe
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,7 +29,12 @@ urlpatterns = [
     path('Panel_estudiantes/', panel_estudiantes, name="panel_estudiantes"),
     path('panel_estudiantes/<int:idEstudiante>/asignaturas/', panel_asignaturas_estudiante, name='panel_asignaturas_estudiante'),
     path('mis_calificaciones/', calificaciones_estudiante, name='mis_calificaciones'),
-    #acciones del admin
+    path('horario_estudiante/<int:estudiante_id>/', horario_estudiante, name='horario_estudiante'),
+    path('listar_documentos/', listar_documentos, name='listar_documentos'),
+    path('descargar_documento/<int:documento_id>/', descargar_documento, name='descargar_documento'),
+    path('tareas/', ver_tareas, name='ver_tareas'),
+    path('redirigir/', plantilla_accionesprofe, name="redirigir"),
+    #accciones del admin
     path('Login_admin/', login_admin, name="Login_admin"),
     path('Panel_admin/', panel_administrador, name="Panel_admin"),
     path('logout_admin/', logout_admin, name="logout_admin"),
@@ -54,4 +59,14 @@ urlpatterns = [
     path('cursos_profesor/', cursos_del_profesor, name='cursos_profesor'),
     path('listar_calificaciones/', listar_calificaciones, name='listar_calificaciones'),
     path('listar_calificaciones/Eliminarcalificaion/<int:idCalificacion>', Eliminar_calificacion, name='Eliminarcalificacion'),
+    path('subir_documento/', subir_documento, name='subir_documento'),
+    path('asignar_tarea/', asignar_tarea, name='asignar_tarea'),
+
+
 ]
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

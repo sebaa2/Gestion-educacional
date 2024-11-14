@@ -95,7 +95,7 @@ def Registrar_profesorForm(request):
 def Eliminar_estudiantes(request, idEstudiante):
     estudiante = get_object_or_404(Estudiante, idEstudiante=idEstudiante)
     estudiante.delete()
-    return redirect('lista_estudiantes',{'title': 'Panel_admin','home_url':reverse('Panel_admin')})
+    return redirect('lista_estudiantes')
 
 def Eliminar_profesor(request, idProfesor):
     profesor = get_object_or_404(Profesor, idProfesor=idProfesor)
@@ -105,10 +105,10 @@ def Eliminar_profesor(request, idProfesor):
 def Eliminar_curso(request, idCurso): 
     curso = get_object_or_404(Curso, idCurso=idCurso) # con el id del podemos elimniar de la base de datos
     curso.delete()
-    return redirect('lista_cursos',{'title': 'Panel_admin','home_url':reverse('Panel_admin')})
+    return redirect('lista_cursos')
 
 def Eliminar_asignatura(request, idClases):
     clases = get_object_or_404(Clases, idClases=idClases)
     clases.delete()
-    return redirect('lista_asignaturas',{'title': 'Panel_admin','home_url':reverse('Panel_admin')})
+    return redirect('lista_asignaturas')
 

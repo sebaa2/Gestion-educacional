@@ -1,0 +1,18 @@
+{% extends "./Base.html" %}
+
+{% block title %}Asignar Tarea{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Asignar Tarea</h1>
+    <div class="card shadow-sm p-4">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-primary">Asignar Tarea</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

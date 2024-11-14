@@ -1,12 +1,34 @@
 {% extends "./Base.html" %}
 <title>Agregar Calificaciones</title>
+
 {% block body %}
-<h2>Agregar Calificaciones</h2>
-<form method="post">
-    {% csrf_token %}
-    <p>Asignatura: {{ clase.nombre }}</p>
-    <p>Profesor: {{ nombre_completo }}</p>
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Guardar</button>
-</form>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg" style="background-color: #E7F3EC;">
+                <div class="card-header text-center" style="background-color: #A5C9B3; color: #fff;">
+                    <h2>Agregar Calificaciones</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <!-- Información de asignatura y profesor -->
+                        <p><strong>Asignatura:</strong> {{ clase.nombre }}</p>
+                        <p><strong>Profesor:</strong> {{ nombre_completo }}</p>
+                        
+                        <!-- Campos del formulario de calificaciones -->
+                        <div class="mb-3">
+                            {{ form.as_p }}
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

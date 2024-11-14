@@ -153,17 +153,11 @@
                         <thead>
                           <tr class="bg-[#f8fcfa]">
                             <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-120 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Nombre</th>
-                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-240 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Curso 
-                                Asignado</th>
-                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-360 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">
-                              Rut
-                            </th>
-                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-480 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">
-                              Fecha Contratación 
-                            </th>
-                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-600 px-4 py-3 text-left text-[#0e1b13] w-60 text-sm font-medium leading-normal">Estado</th>
+                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-240 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Curso Asignado</th>
+                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-360 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Rut</th>
+                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-480 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Fecha Contratación </th>
+                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-480 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Acciones </th>
                             <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-720 px-4 py-3 text-left text-[#0e1b13] w-60 text-[#4e976d] text-sm font-medium leading-normal">
-            
                             </th>
                           </tr>
                         </thead>
@@ -174,6 +168,9 @@
                             <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-240 h-[72px] px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal leading-normal">{{ prof.telefono }}</td>
                             <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-360 h-[72px] px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal leading-normal">{{ prof.rut }}</td>
                             <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-480 h-[72px] px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal leading-normal">{{ prof.matricula}}</td>
+                            <td class="h-[72px] px-4 py-2 text-[#0e1b13] text-sm font-normal leading-normal"><a href="EliminarProfesor/{{prof.idProfesor}}" class="btn btn-danger">Eliminar</a>
+                              <br>
+                            <a href="#" class="btn btn-danger">Actualizar</a></td>
                             <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-600 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
                           </tr>
                           {% endfor %}

@@ -43,8 +43,8 @@
                 <div class="flex flex-1 justify-end gap-8">
                   <div class="flex items-center gap-9">
                     <br>
-                    <a class="text-[#0e1b13] text-sm font-medium leading-normal" href="#">Agregar Material</a>
-                    <a class="text-[#0e1b13] text-sm font-medium leading-normal" href="#">Agregar Tareas</a>
+                    <a class="text-[#0e1b13] text-sm font-medium leading-normal" href="{% url 'subir_documento' %}">Agregar Material</a>
+                    <a class="text-[#0e1b13] text-sm font-medium leading-normal" href="{% url 'asignar_tarea' %}">Agregar Tareas</a>
                     <a class="text-[#0e1b13] text-sm font-medium leading-normal" href="{% url 'logout_profesor' %}">Cerrar sesión</a>
                   </div>
                   <div class="flex gap-2">
@@ -148,38 +148,37 @@
                       </div>
                     </label>
                   </div>
-                  <div class="px-4 py-3 @container">
+                  <div class="px-4 py-3">
                     <div class="flex overflow-hidden rounded-xl border border-[#d0e7d9] bg-[#f8fcfa]">
-                      <table class="flex-1">
+                      <table class="w-full table-auto">
                         <thead>
                           <tr class="bg-[#f8fcfa]">
-                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-120 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Asignatura</th>
-                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-240 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Nombre estudiante</th>
-                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-360 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Curso</th>
-                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-480 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Nota </th>
-                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-480 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Fecha registro </th>
-                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-600 px-4 py-3 text-left text-[#0e1b13] w-60 text-sm font-medium leading-normal">Estado</th>
-                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-720 px-4 py-3 text-left text-[#0e1b13] w-60 text-[#4e976d] text-sm font-medium leading-normal">
-            
-                            </th>
+                            <th class="px-4 py-3 text-left text-[#0e1b13] text-sm font-medium leading-normal">Asignatura</th>
+                            <th class="px-4 py-3 text-left text-[#0e1b13] text-sm font-medium leading-normal">Nombre estudiante</th>
+                            <th class="px-4 py-3 text-left text-[#0e1b13] text-sm font-medium leading-normal">Curso</th>
+                            <th class="px-4 py-3 text-left text-[#0e1b13] text-sm font-medium leading-normal">Nota</th>
+                            <th class="px-4 py-3 text-left text-[#0e1b13] text-sm font-medium leading-normal">Fecha registro</th>
+                            <th class="px-4 py-3 text-left text-[#0e1b13] text-sm font-medium leading-normal">Acciones</th>
                           </tr>
                         </thead>
                         <tbody>
-                            {% for calificacion in calificaciones %}
+                          {% for calificacion in calificaciones %}
                           <tr class="border-t border-t-[#d0e7d9]">
-                            <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-120 h-[72px] px-4 py-2 w-[400px] text-[#0e1b13] text-sm font-normal leading-normal">{{ calificacion.clase.nombre }}</td>
-                            <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-240 h-[72px] px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal leading-normal">{{ calificacion.estudiante.nombre }} {{ calificacion.estudiante.apellido }}</td>
-                            <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-360 h-[72px] px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal leading-normal">{{ calificacion.curso.nombre_curso }}</td>
-                            <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-480 h-[72px] px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal leading-normal">{{ calificacion.nota }}</td>
-                            <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-480 h-[72px] px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal leading-normal">{{ calificacion.fecha_registro }}</td>
-                            <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-600 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
+                            <td class="h-[72px] px-4 py-2 text-[#0e1b13] text-sm font-normal leading-normal">{{ calificacion.clase.nombre }}</td>
+                            <td class="h-[72px] px-4 py-2 text-[#0e1b13] text-sm font-normal leading-normal">{{ calificacion.estudiante.nombre }}</td>
+                            <td class="h-[72px] px-4 py-2 text-[#0e1b13] text-sm font-normal leading-normal">{{ calificacion.curso }}</td>
+                            <td class="h-[72px] px-4 py-2 text-[#0e1b13] text-sm font-normal leading-normal">{{ calificacion.nota }}</td>
+                            <td class="h-[72px] px-4 py-2 text-[#0e1b13] text-sm font-normal leading-normal">{{ calificacion.fecha_registro }}</td>
+                            <td class="h-[72px] px-4 py-2 text-[#0e1b13] text-sm font-normal leading-normal"><a href="Eliminarcalificaion/{{calificacion.idCalificacion}}" class="btn btn-danger">Eliminar</a>
+                              <br>
+                            <a href="#" class="btn btn-danger">Actualizar</a></td>
                           </tr>
                           {% endfor %}
                         </tbody>
                       </table>
                     </div>
                     <style>
-                                @container(max-width:120px){.table-e4d97697-f732-4386-ac06-9502f728102e-column-120{display: none;}}
+                      @container(max-width:120px){.table-e4d97697-f732-4386-ac06-9502f728102e-column-120{display: none;}}
                       @container(max-width:240px){.table-e4d97697-f732-4386-ac06-9502f728102e-column-240{display: none;}}
                       @container(max-width:360px){.table-e4d97697-f732-4386-ac06-9502f728102e-column-360{display: none;}}
                       @container(max-width:480px){.table-e4d97697-f732-4386-ac06-9502f728102e-column-480{display: none;}}

@@ -14,12 +14,22 @@ class Profesor(models.Model):
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
 
+class Fecha_horario(models.Model):
+    idFecha_horario = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=45)
+
+    def __str__(self):
+        return f"{self.nombre}"
+
 
 class Clases(models.Model):
     idClases = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=45)
     fecha_matricula = models.DateField()
     profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE)
+    hora_entrada = models.TimeField()
+    hora_salida = models.TimeField()
+    fecha_horario = models.ManyToManyField(Fecha_horario)
 
     def __str__(self):
         return self.nombre
@@ -85,3 +95,26 @@ class Administrador(models.Model):
 
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
+
+class Documento(models.Model):
+    titulo = models.CharField(max_length=100)
+    archivo = models.FileField(upload_to='documentos/')  # Almacena el archivo en la carpeta 'documentos'
+    descripcion = models.TextField(null=True, blank=True)  # Descripción opcional del archivo
+    fecha_subida = models.DateField(auto_now_add=True)
+    profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE)  # El documento será subido por un profesor
+    clase = models.ForeignKey(Clases, on_delete=models.CASCADE, null=True, blank=True)  # Relacionado con una clase, si lo deseas
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE, null=True, blank=True)  # Relacionado con un curso, si lo deseas
+
+    def __str__(self):
+        return f"Documento {self.titulo} - {self.profesor.nombre}"
+
+class Tarea(models.Model):
+    titulo = models.CharField(max_length=100)
+    descripcion = models.TextField()
+    fecha_entrega = models.DateField()
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE, related_name='tareas')
+    profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE, related_name='tareas')
+    clase = models.ForeignKey(Clases, on_delete=models.CASCADE, related_name='tareas')
+
+    def __str__(self):
+        return self.titulo

@@ -2,10 +2,13 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Estudiante, Calificacion
+from .models import Estudiante, Calificacion, Clases, Documento, Tarea
 from datetime import datetime, timezone
 from .forms import LoginForm 
 from django.urls import reverse
+import os
+
+
 def Principal(request):
     return render(request, 'Principal.html')
 
@@ -40,7 +43,14 @@ def logout(request):
 def panel_estudiantes(request):
     if not request.session.get('autenticado'):
         return redirect('login_estudiantes')
-    return render(request, 'Panel_estudiantes.html')
+    estudiante_id = request.session.get('usuario_id')
+    if estudiante_id:
+        # Obtener el estudiante usando el id de la sesión
+        estudiante = Estudiante.objects.get(idEstudiante=estudiante_id)
+        return render(request, 'Panel_estudiantes.html', {'estudiante': estudiante})
+    else:
+        # Si no se encuentra el id del estudiante, redirigir al login
+        return redirect('login_estudiantes')
 
 
 def panel_asignaturas_estudiante(request, idEstudiante):
@@ -67,3 +77,59 @@ def calificaciones_estudiante(request):
 
     return render(request, 'Calificaciones_estudiante.html', {'calificaciones': calificaciones})
 
+def horario_estudiante(request, estudiante_id):
+    # Obtener al estudiante por ID
+    estudiante = Estudiante.objects.get(idEstudiante=estudiante_id)
+    
+    # Obtener el curso al que pertenece
+    curso = estudiante.curso
+    
+    # Obtener las clases asociadas a ese curso
+    clases = curso.clases.all()
+    
+    # Crear una lista de horarios para cada clase
+    horario = []
+    for clase in clases:
+        for fecha_horario in clase.fecha_horario.all():
+            horario.append({
+                'clase': clase.nombre,
+                'hora_entrada': clase.hora_entrada,
+                'hora_salida': clase.hora_salida,
+                'dia': fecha_horario.nombre,
+            })
+
+    return render(request, 'horario_estudiante.html', {'horario': horario, 'estudiante': estudiante})
+
+# views.py
+def listar_documentos(request, curso_id=None, clase_id=None):
+    if curso_id:
+        documentos = Documento.objects.filter(curso_id=curso_id)
+    elif clase_id:
+        documentos = Documento.objects.filter(clase_id=clase_id)
+    else:
+        documentos = Documento.objects.all()
+    
+    return render(request, 'listar_documentos.html', {'documentos': documentos})
+
+def descargar_documento(request, documento_id):
+    documento = get_object_or_404(Documento, id=documento_id)
+    archivo_path = documento.archivo.path  # Obtiene la ruta absoluta del archivo en el sistema de archivos
+    
+    with open(archivo_path, 'rb') as f:
+        response = HttpResponse(f.read(), content_type='application/octet-stream')
+        response['Content-Disposition'] = f'attachment; filename="{os.path.basename(archivo_path)}"'
+        return response
+
+def ver_tareas(request):
+    # Verificar si el usuario está autenticado
+    if request.session.get('autenticado'):
+        estudiante_id = request.session.get('usuario_id')
+        estudiante = Estudiante.objects.get(idEstudiante=estudiante_id)
+        tareas = Tarea.objects.filter(curso=estudiante.curso)  # Filtrar tareas según el curso del estudiante
+        return render(request, 'ver_tareas.html', {'tareas': tareas})
+    else:
+        return redirect('login_estudiante')  # Redireccionar al login si no está autenticado
+    
+def plantilla_accionesprofe(request):
+    documento = Documento.objects.first()  # Obtén un documento para el enlace de descarga
+    return render(request, 'redirigir.html', {'documento': documento})

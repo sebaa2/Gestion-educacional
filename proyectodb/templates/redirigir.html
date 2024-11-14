@@ -1,0 +1,55 @@
+{% extends "./Base.html" %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Panel de Estudiante</h2>
+    
+    <div class="row justify-content-center">
+        <!-- Card para Ver Tareas -->
+        <div class="col-md-5 mb-4">
+            <a href="{% url 'ver_tareas' %}" class="text-decoration-none">
+                <div class="card h-100 bg-light border-0 shadow-lg">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="me-3">
+                            <i class="bi bi-list-task fs-2 text-primary"></i>
+                        </div>
+                        <div>
+                            <h5 class="card-title mb-1">Visualizar Tareas</h5>
+                            <p class="card-text text-muted">Consulta la lista de tareas asignadas en tu curso para gestionar tu estudio.</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Card para Material de Estudio -->
+        <div class="col-md-5 mb-4">
+            {% if documento %}
+                <a href="{% url 'listar_documentos' %}" class="text-decoration-none">
+                    <div class="card h-100 bg-light border-0 shadow-lg">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="me-3">
+                                <i class="bi bi-journal-bookmark fs-2 text-success"></i>
+                            </div>
+                            <div>
+                                <h5 class="card-title mb-1">Material de Estudio</h5>
+                                <p class="card-text text-muted">Accede a documentos y recursos compartidos por tus profesores para mejorar tu aprendizaje.</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% else %}
+                <div class="alert alert-warning text-center" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill"></i> No hay documentos disponibles en este momento.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Botones de redirección -->
+    <div class="text-center mt-5">
+        <a href="{% url 'logout_estudiantes' %}" class="btn btn-danger btn-lg mb-2">Cerrar sesión</a>
+        <a href="{% url 'panel_estudiantes' %}" class="btn btn-primary btn-lg">Ir al Panel Estudiantes</a>
+    </div>
+</div>
+{% endblock %}

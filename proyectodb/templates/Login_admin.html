@@ -1,6 +1,7 @@
 {% extends "./Base.html" %}
 <title>Login admin</title>
 {% block body %}
+{% load static %}
 <body>
     <div class="container">
         <div class="row justify-content-center">
@@ -17,8 +18,16 @@
                         <label for="password" class="form-label">Clave</label>
                         <input type="password" name="password" id="password" class="form-control">
                     </div>
+                    <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-primary">Ingresar</button>
+                    </div>
                 </form>
+                <br>
+                <div class="d-grid gap-2">
+                <a href="/" type="button" class="btn btn-dark">
+                    <img src="{% static 'imagenes/iconvolver.png' %}" >
+                </a>
+                </div>
             </div>
         </div>
     </div>

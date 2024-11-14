@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Estudiante, Clases, Curso, Calificacion, Profesor, Asistencia, Administrador
+from .models import Estudiante, Clases, Curso, Calificacion, Profesor, Asistencia, Administrador, Documento, Tarea
 
 admin.site.register(Curso)
 admin.site.register(Estudiante)
@@ -9,3 +9,5 @@ admin.site.register(Calificacion)
 admin.site.register(Profesor)
 admin.site.register(Asistencia)
 admin.site.register(Administrador)
+admin.site.register(Documento)
+admin.site.register(Tarea)

@@ -1,5 +1,13 @@
 from django import forms
-from .models import Estudiante, Profesor, Curso, Clases, Calificacion
+from .models import Estudiante, Profesor, Curso, Clases, Calificacion, Documento, Tarea
+
+class TareaForm(forms.ModelForm):
+    class Meta:
+        model = Tarea
+        fields = ['titulo', 'descripcion', 'fecha_entrega', 'curso', 'clase']
+        widgets = {
+            'fecha_entrega': forms.DateInput(attrs={'type': 'date'}),
+        }
 
 class LoginForm(forms.Form):
     username  = forms.CharField()
@@ -90,14 +98,25 @@ class AgregarCursoForm(forms.ModelForm):
 class AgregarAsignaturas(forms.ModelForm):
     class Meta:
         model = Clases
-        fields = ['nombre', 'fecha_matricula', 'profesor']
+        fields = ['nombre', 'fecha_matricula', 'profesor', 'hora_entrada', 'hora_salida', 'fecha_horario']
         labels = {
             'nombre': 'Nombre asignatura',
-            'fecha_matricula': 'Fecha incripción',
+            'fecha_matricula': 'Fecha inscripción',
             'profesor': 'Profesor',
+            'hora_entrada': 'Hora entrada',
+            'hora_salida': 'Hora salida',
+            'fecha_horario': 'Fecha horario'
         }
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
             'fecha_matricula': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'profesor': forms.Select(attrs={'class': 'form-control'}),
+            'hora_entrada': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
+            'hora_salida': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
+            'fecha_horario': forms.CheckboxSelectMultiple(),
         }
+
+class DocumentoForm(forms.ModelForm):
+    class Meta:
+        model = Documento
+        fields = ['titulo', 'archivo', 'descripcion', 'clase', 'curso']

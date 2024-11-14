@@ -1,6 +1,7 @@
+from django.http import Http404
 from django.shortcuts import get_object_or_404, render, redirect
 from appproject.models import Profesor, Estudiante, Calificacion, Clases, Curso
-from appproject.forms import LoginForm, CalificacionForm
+from appproject.forms import LoginForm, CalificacionForm, DocumentoForm, TareaForm
 from django.urls import reverse
 
 def Principal(request):
@@ -118,4 +119,35 @@ def Eliminar_calificacion(request, idCalificacion):
     calificacion.delete()
     return redirect('listar_calificaciones')
 
+def subir_documento(request):
+    if not request.session.get('autenticado', False):
+        return redirect('login_profesor')  # Redirigir si el profesor no está autenticado
 
+    if request.method == 'POST':
+        form = DocumentoForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Asociar el profesor autenticado al documento
+            documento = form.save(commit=False)
+            # Obtener el profesor desde la sesión
+            documento.profesor_id = request.session.get('usuario_id')
+            documento.save()
+            return redirect('panel_profesor')  # Redirige a una página de éxito
+    else:
+        form = DocumentoForm()
+
+    return render(request, 'subir_documento.html', {'form': form})
+
+def asignar_tarea(request):
+    if request.method == 'POST':
+        form = TareaForm(request.POST)
+        if form.is_valid():
+            tarea = form.save(commit=False)  # No guardar todavía
+            profesor = Profesor.objects.get(rut=request.session['usuario'])  # Obtener el profesor según el rut guardado en la sesión
+            tarea.profesor = profesor  # Asignar el profesor a la tarea
+            tarea.save()  # Ahora sí guardar la tarea con el profesor asignado
+            return redirect('panel_profesor')  # Redirigir al panel del profesor
+        else:
+            print(form.errors)  # Ver los errores del formulario
+    else:
+        form = TareaForm()
+    return render(request, 'asignar_tarea.html', {'form': form})

@@ -16,8 +16,8 @@
             <h3>Opciones</h3>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="{% url 'agregar_estudiante' %}"><i class="fas fa-user-plus"></i>Agregar Material</a></li>
-            <li><a href="{% url 'agregar_profesor' %}"><i class="fas fa-chalkboard-teacher"></i>Agregar Tareas</a></li>
+            <li><a href="{% url 'subir_documento' %}"><i class="fas fa-user-plus"></i>Agregar Material</a></li>
+            <li><a href="{% url 'asignar_tarea' %}"><i class="fas fa-chalkboard-teacher"></i>Agregar Tareas</a></li>
             <li><a href="{% url 'clases_profesor' %}"><i class="fas fa-book-open"></i>Agregar Calificaciones</a></li>
         </ul>
     </div>
@@ -28,7 +28,7 @@
             <a class="navbar-brand" href="#">Panel de profesor</a>
             <div class="navbar-right">
                 <a href="{{home_url}}" class="btn">Inicio</a>
-                <a href="{% url 'logout_admin' %}" class="btn">Cerrar sesión</a>
+                <a href="{% url 'logout_profesor' %}" class="btn">Cerrar sesión</a>
             </div>
         </nav>
 

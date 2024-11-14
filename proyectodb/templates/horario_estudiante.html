@@ -1,5 +1,5 @@
 {% extends "./Base.html" %}
-<title>Agregar estudiante</title>
+<title>Agregar profesor</title>
 {% block body %}
 <div class="Delegar Profesor">
     <html>
@@ -12,6 +12,7 @@
             href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Public+Sans%3Awght%40400%3B500%3B700%3B900"
           />
       
+          <title>Panel Administrador</title>
           <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
       
           <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -34,16 +35,14 @@
                       </defs>
                     </svg>
                   </div>
-                  <h2 class="text-[#0e1b13] text-lg font-bold leading-tight tracking-[-0.015em]">Administrador</h2>
+                  <h2 class="text-[#0e1b13] text-lg font-bold leading-tight tracking-[-0.015em]">Estudiante</h2>
                 </div>
                 <br>
                 <div class="flex flex-1 justify-end gap-8">
                   <div class="flex items-center gap-9">
                     <br>
-                    <a class="text-[#0e1b13] text-sm font-medium leading-normal" href="{% url 'agregar_estudiante' %}">Agregar estudiante</a>
-                    <a class="text-[#0e1b13] text-sm font-medium leading-normal" href="{% url 'agregar_asignatura' %}">Agregar Asignaturas</a>
-                    <a class="text-[#0e1b13] text-sm font-medium leading-normal" href="{% url 'agregar_profesor' %}">Agregar profesor</a>
-                    <a class="text-[#0e1b13] text-sm font-medium leading-normal" href="{% url 'logout_admin' %}">Cerrar sesión</a>
+                    <a class="text-[#0e1b13] text-sm font-medium leading-normal" href="{% url 'panel_estudiantes' %}">Volver</a>
+                    <a class="text-[#0e1b13] text-sm font-medium leading-normal" href="{% url 'logout_estudiantes' %}">Cerrar sesión</a>
                   </div>
                   <div class="flex gap-2">
                     <button
@@ -82,14 +81,7 @@
                      
                   </div>
                   <div class="flex items-center gap-4 bg-[#f8fcfa] px-4 min-h-14">
-                    <div class="text-[#0e1b13] flex items-center justify-center rounded-lg bg-[#e7f3ec] shrink-0 size-10" data-icon="PlusCircle" data-size="24px" data-weight="regular">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                        <path
-                          d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm48-88a8,8,0,0,1-8,8H136v32a8,8,0,0,1-16,0V136H88a8,8,0,0,1,0-16h32V88a8,8,0,0,1,16,0v32h32A8,8,0,0,1,176,128Z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <a class="text-[#0e1b13] text-base font-normal leading-normal flex-1 truncate" href="{% url 'agregar_curso' %}">Agregar cursos</a>
+                    
                   </div>
                   <div class="flex items-center gap-4 bg-[#f8fcfa] px-4 min-h-14">
                     <div class="text-[#0e1b13] flex items-center justify-center rounded-lg bg-[#e7f3ec] shrink-0 size-10" data-icon="Chat" data-size="24px" data-weight="regular">
@@ -116,7 +108,7 @@
                 
                 <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
                   <div class="flex flex-wrap justify-between gap-3 p-4">
-                    <p class="text-[#0e1b13] text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">Curso</p>
+                    <p class="text-[#0e1b13] text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">Horario</p>
                     <button
                       class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#e7f3ec] text-[#0e1b13] text-sm font-bold leading-normal tracking-[0.015em]"
                     >
@@ -151,42 +143,27 @@
                       <table class="flex-1">
                         <thead>
                           <tr class="bg-[#f8fcfa]">
-                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-120 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Nombre curso</th>
-                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-240 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Asignatura</th>
-                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-240 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Acciones</th>
-                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-240 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Estado</th>
+                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-240 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Clase</th>
+                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-360 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Horario</th>
+                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-480 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Día</th>
                             <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-720 px-4 py-3 text-left text-[#0e1b13] w-60 text-[#4e976d] text-sm font-medium leading-normal">
             
                             </th>
                           </tr>
                         </thead>
                         <tbody>
-                            {% for curso in cursos %}
-                                <tr class="border-t border-t-[#d0e7d9]">
-                                    <!-- Nombre del curso -->
-                                    <td class="px-4 py-2 w-[400px] text-[#0e1b13] text-sm font-normal">{{ curso.nombre_curso }}</td>
-                        
-                                    <!-- Asignaturas -->
-                                    <td class="px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal">
-                                        {% if curso.clases.all %}
-                                            {% for clase in curso.clases.all %}
-                                                {{ clase.nombre }}
-                                                {% if not forloop.last %}, {% endif %}
-                                            {% endfor %}
-                                        {% else %}
-                                            <span class="text-gray-500">No asignado</span>
-                                        {% endif %}
-                                    </td>
-                                    <td class="px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal"><a href="EliminarCurso/{{curso.idCurso}}" class="btn btn-danger">Eliminar</a><a href="#" class="btn btn-danger">Actualizar</a></td>
-                        
-                                    <!-- Estado del curso -->
-                                    <td class="px-4 py-2 w-60 text-sm font-normal">
-                                        <span class="px-2 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800">
-                                            Activo
-                                        </span>
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                            {% for clase in horario %}                          
+                            <tr class="border-t border-t-[#d0e7d9]">
+                            <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-240 h-[72px] px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal leading-normal">{{ clase.clase }}</td>
+                            <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-360 h-[72px] px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal leading-normal">{{ clase.hora_entrada }} - {{ clase.hora_salida }}</td>
+                            <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-480 h-[72px] px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal leading-normal">{{ clase.dia }}</td>
+                            <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-600 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
+                          </tr>
+                          {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center">No tienes clases asignadas.</td>
+                    </tr>
+                          {% endfor %}
                         </tbody>
                       </table>
                     </div>

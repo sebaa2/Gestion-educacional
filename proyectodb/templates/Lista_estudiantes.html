@@ -155,7 +155,7 @@
                             <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-240 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Telefono</th>
                             <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-360 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Rut</th>
                             <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-480 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Fecha de matricula</th>
-                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-600 px-4 py-3 text-left text-[#0e1b13] w-60 text-sm font-medium leading-normal">Estado</th>
+                            <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-480 px-4 py-3 text-left text-[#0e1b13] w-[400px] text-sm font-medium leading-normal">Acciones</th>
                             <th class="table-e4d97697-f732-4386-ac06-9502f728102e-column-720 px-4 py-3 text-left text-[#0e1b13] w-60 text-[#4e976d] text-sm font-medium leading-normal">
             
                             </th>
@@ -168,6 +168,9 @@
                             <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-240 h-[72px] px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal leading-normal">{{ estu.telefono }}</td>
                             <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-360 h-[72px] px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal leading-normal">{{ estu.rut }}</td>
                             <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-480 h-[72px] px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal leading-normal">{{ estu.matricula }}</td>
+                            <td ><a href="EliminarEstudiante/{{estu.idEstudiante}}" class="btn btn-danger">Eliminar</a>
+                              <br>
+                            <a href="#" class="btn btn-danger">Actualizar</a></td>
                             <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-600 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
                           </tr>
                           {% endfor %}
