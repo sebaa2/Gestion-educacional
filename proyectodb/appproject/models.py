@@ -8,7 +8,7 @@ class Profesor(models.Model):
     telefono = models.IntegerField()
     correo = models.EmailField(max_length=45)
     rut = models.CharField(max_length=45)
-    contrasena = models.CharField(max_length=45)
+    contraseña = models.CharField(max_length=45)
     matricula = models.DateField()
 
     def __str__(self):
@@ -52,7 +52,7 @@ class Estudiante(models.Model):
     telefono = models.IntegerField()
     matricula = models.DateField()
     rut = models.IntegerField()
-    contrasena = models.CharField(max_length=200)
+    contraseña = models.CharField(max_length=200)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE, default='Sin asignar')
 
     def __str__(self):
@@ -91,7 +91,7 @@ class Administrador(models.Model):
     apellido = models.CharField(max_length=45)
     correo = models.EmailField(max_length=45)
     rut = models.CharField(max_length=45)
-    contrasena = models.CharField(max_length=45)
+    contraseña = models.CharField(max_length=45)
 
     def __str__(self):
         return f"{self.nombre} {self.apellido}"

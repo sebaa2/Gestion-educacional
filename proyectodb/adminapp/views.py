@@ -15,15 +15,15 @@ def login_admin(request):
         password = form.cleaned_data.get("password")
         try:
             user = Administrador.objects.get(rut = username)
-            #En caso de que la contrasena ingresada sea igual a la contrasena almacenada
-            if user.contrasena == password:
+            #En caso de que la contraseña ingresada sea igual a la contraseña almacenada
+            if user.contraseña == password:
                 request.session['autenticado'] = True 
                 request.session['usuario'] = user.rut 
                 request.session['nombre_completo'] = user.nombre +" "+ user.apellido
                 #Redireccionamos a lista de gestiones
                 return redirect("/Panel_admin")
             else:
-                form.add_error(None, 'contrasena incorrecta')
+                form.add_error(None, 'contraseña incorrecta')
         except Administrador.DoesNotExist:
             form.add_error(None, 'Usuario no existe')
     return render(request, "Login_admin.html", {"form": form,'title': 'login_admin', 'home_url': '/'})

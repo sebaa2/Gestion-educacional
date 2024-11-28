@@ -15,8 +15,8 @@ def login_profesor(request):
         password = form.cleaned_data.get("password")
         try:
             user = Profesor.objects.get(rut = username)
-            #En caso de que la contrasena ingresada sea igual a la contrasena almacenada
-            if user.contrasena == password:
+            #En caso de que la contraseña ingresada sea igual a la contraseña almacenada
+            if user.contraseña == password:
                 request.session['autenticado'] = True 
                 request.session['usuario'] = user.rut 
                 request.session['usuario_id'] = user.idProfesor
