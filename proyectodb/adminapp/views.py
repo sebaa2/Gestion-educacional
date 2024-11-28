@@ -134,3 +134,20 @@ def editar_estudiante(request, idEstudiante):
         'title': 'Editar Estudiante',
         'home_url': reverse('Panel_admin'),
     })
+
+def editar_profesor(request, idProfesor):
+    profesor = get_object_or_404(Profesor, idProfesor=idProfesor)
+    if request.method == "POST":
+        form = AgregarProfesor(request.POST, instance=profesor)
+        if form.is_valid():
+            form.save()
+            return redirect('Lista_profesores')
+    else:
+        form = AgregarProfesor(instance=profesor)
+        
+    # Renderizar el formulario en la plantilla
+    return render(request, 'Actualizar_profesores.html', {
+        'form': form,
+        'title': 'Editar Profesor',
+        'home_url': reverse('Panel_admin'),
+    })
