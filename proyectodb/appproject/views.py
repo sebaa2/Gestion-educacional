@@ -20,8 +20,8 @@ def login_view(request):
         password = form.cleaned_data.get("password")
         try:
             user = Estudiante.objects.get( rut = username)
-            #En caso de que la contraseña ingresada sea igual a la contraseña almacenada
-            if user.contraseña == password:
+            #En caso de que la contrasena ingresada sea igual a la contrasena almacenada
+            if user.contrasena == password:
                 request.session['autenticado'] = True 
                 request.session['usuario'] = user.rut
                 request.session['usuario_id'] = user.idEstudiante 

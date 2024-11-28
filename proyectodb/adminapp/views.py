@@ -5,6 +5,7 @@ from appproject.forms import LoginForm, AgregarEstudiantes, AgregarProfesor, Agr
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
 
 def login_admin(request):
     form = LoginForm(request.POST)
@@ -14,19 +15,20 @@ def login_admin(request):
         password = form.cleaned_data.get("password")
         try:
             user = Administrador.objects.get(rut = username)
-            #En caso de que la contraseña ingresada sea igual a la contraseña almacenada
-            if user.contraseña == password:
+            #En caso de que la contrasena ingresada sea igual a la contrasena almacenada
+            if user.contrasena == password:
                 request.session['autenticado'] = True 
                 request.session['usuario'] = user.rut 
                 request.session['nombre_completo'] = user.nombre +" "+ user.apellido
                 #Redireccionamos a lista de gestiones
                 return redirect("/Panel_admin")
             else:
-                form.add_error(None, 'Contraseña incorrecta')
+                form.add_error(None, 'contrasena incorrecta')
         except Administrador.DoesNotExist:
             form.add_error(None, 'Usuario no existe')
     return render(request, "Login_admin.html", {"form": form,'title': 'login_admin', 'home_url': '/'})
 
+#@login_required
 def logout_admin(request):
     request.session.pop('autenticado',None)
     return redirect('Login_admin')
@@ -112,3 +114,23 @@ def Eliminar_asignatura(request, idClases):
     clases.delete()
     return redirect('lista_asignaturas')
 
+def editar_estudiante(request, idEstudiante):
+    # Obtener el estudiante por ID
+    estudiante = get_object_or_404(Estudiante, idEstudiante=idEstudiante)
+
+    if request.method == "POST":
+        # Llenar el formulario con los datos enviados y el estudiante actual
+        form = AgregarEstudiantes(request.POST, instance=estudiante)
+        if form.is_valid():
+            form.save()  # Guardar cambios
+            return redirect('lista_estudiantes')  # Redirigir a la lista de estudiantes
+    else:
+        # Prellenar el formulario con los datos actuales del estudiante
+        form = AgregarEstudiantes(instance=estudiante)
+
+    # Renderizar el formulario en la plantilla
+    return render(request, 'Actualizar_estudiantes.html', {
+        'form': form,
+        'title': 'Editar Estudiante',
+        'home_url': reverse('Panel_admin'),
+    })

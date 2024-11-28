@@ -30,7 +30,7 @@ class AgregarEstudiantes(forms.ModelForm):
         fields = [ 
             "nombre", "apellido", "fecha_nacimiento", 
             "direccion", "telefono", "matricula", 
-            "rut", "contraseña", "curso"
+            "rut", "contrasena", "curso"
         ]  # Definir los campos a usar
 
         labels = {
@@ -41,7 +41,7 @@ class AgregarEstudiantes(forms.ModelForm):
             "telefono": 'Teléfono ',
             "matricula": 'Matrícula ',
             "rut": 'Rut ',
-            "contraseña": 'Contraseña ',
+            "contrasena": 'Contraseña ',
             "curso": 'Curso '
         }
         
@@ -53,21 +53,21 @@ class AgregarEstudiantes(forms.ModelForm):
             'telefono': forms.TextInput(attrs={'class': 'form-control'}),
             'matricula': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'rut': forms.TextInput(attrs={'class': 'form-control'}),
-            'contraseña': forms.PasswordInput(attrs={'class': 'form-control'}),
+            'contrasena': forms.PasswordInput(attrs={'class': 'form-control'}),
             'curso': forms.Select(attrs={'class': 'form-control'}),  # Menú desplegable para curso
         }
 
 class AgregarProfesor(forms.ModelForm):
     class Meta:
         model = Profesor
-        fields = ['nombre', 'apellido', 'telefono', 'correo', 'rut', 'contraseña', 'matricula']  # Especifica los campos que deseas incluir
+        fields = ['nombre', 'apellido', 'telefono', 'correo', 'rut', 'contrasena', 'matricula']  # Especifica los campos que deseas incluir
         labels = {
             'nombre': 'Nombre',
             'apellido': 'Apellido',
             'telefono': 'Teléfono',
             'correo': 'Correo Electrónico',
             'rut': 'RUT',
-            'contraseña': 'Contraseña',
+            'contrasena': 'Contraseña',
             'matricula': 'fecha de Contrato',
         }
         widgets = {
@@ -76,7 +76,7 @@ class AgregarProfesor(forms.ModelForm):
             'telefono': forms.NumberInput(attrs={'class': 'form-control'}),
             'correo': forms.EmailInput(attrs={'class': 'form-control'}),
             'rut': forms.TextInput(attrs={'class': 'form-control'}),
-            'contraseña': forms.PasswordInput(attrs={'class': 'form-control'}),
+            'contrasena': forms.PasswordInput(attrs={'class': 'form-control'}),
             'matricula': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
         }
 
