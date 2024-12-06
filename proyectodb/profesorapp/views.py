@@ -151,3 +151,19 @@ def asignar_tarea(request):
     else:
         form = TareaForm()
     return render(request, 'asignar_tarea.html', {'form': form})
+
+def actualizar_calificacion(request, id_calificacion):
+    # Obtener la calificación que se quiere actualizar
+    calificacion = get_object_or_404(Calificacion, idCalificacion=id_calificacion)
+    
+    # Manejo del formulario
+    if request.method == 'POST':
+        form = CalificacionForm(request.POST, instance=calificacion)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_calificaciones')  # Redirige a la lista de calificaciones tras guardar
+    else:
+        form = CalificacionForm(instance=calificacion)
+    
+    # Renderizar el formulario
+    return render(request, 'Actualizar_notas.html', {'form': form, 'calificacion': calificacion})
