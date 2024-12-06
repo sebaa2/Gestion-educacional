@@ -16,8 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from profesorapp.views import login_profesor, panel_profesor, agregar_calificacion, logout_profesor, clases_del_profesor, cursos_del_profesor, listar_calificaciones, Eliminar_calificacion, subir_documento, asignar_tarea
-from adminapp.views import login_admin, panel_administrador, logout_admin, Registrar_estudiantesForm, Registrar_profesorForm, lista_profesores, agregar_curso, lista_cursos, agregar_asignatura, lista_asignaturas, lista_estudiantes, Eliminar_estudiantes, Eliminar_profesor, Eliminar_curso, Eliminar_asignatura
+from profesorapp.views import login_profesor, panel_profesor, agregar_calificacion, logout_profesor, clases_del_profesor, cursos_del_profesor, listar_calificaciones, Eliminar_calificacion, subir_documento, asignar_tarea, actualizar_calificacion
+from adminapp.views import editar_profesor, login_admin, panel_administrador, logout_admin, Registrar_estudiantesForm, Registrar_profesorForm, lista_profesores, agregar_curso, lista_cursos, agregar_asignatura, lista_asignaturas, lista_estudiantes, Eliminar_estudiantes, Eliminar_profesor, Eliminar_curso, Eliminar_asignatura, editar_estudiante, actualizar_asignatura, actualizar_curso
 from appproject.views import Principal, login_view, panel_estudiantes, logout, panel_asignaturas_estudiante, calificaciones_estudiante, horario_estudiante, listar_documentos, descargar_documento, ver_tareas, plantilla_accionesprofe
 
 urlpatterns = [
@@ -50,6 +50,9 @@ urlpatterns = [
     path('Lista_estudiantes/EliminarEstudiante/<int:idEstudiante>', Eliminar_estudiantes, name="eliminar_estudiantes"),
     path('lista_cursos/EliminarCurso/<int:idCurso>', Eliminar_curso, name="eliminar_curso"),
     path('Lista_asignaturas/EliminarAsignatura/<int:idClases>', Eliminar_asignatura, name="eliminar_asignaturas"),
+    path('editar_estudiante/<int:idEstudiante>/',editar_estudiante, name='editar_estudiante'),
+    path('editar_profesor/<int:idProfesor>/',editar_profesor, name='editar_profesor'),
+    path('actualizar-asignatura/<int:id_clase>/', actualizar_asignatura, name='actualizar_asignatura'),
     #acciones del profesor
     path('Login_profesor/', login_profesor, name='login_profesor'),
     path('Logout_profesor/', logout_profesor, name='logout_profesor'),
@@ -61,8 +64,8 @@ urlpatterns = [
     path('listar_calificaciones/Eliminarcalificaion/<int:idCalificacion>', Eliminar_calificacion, name='Eliminarcalificacion'),
     path('subir_documento/', subir_documento, name='subir_documento'),
     path('asignar_tarea/', asignar_tarea, name='asignar_tarea'),
-
-
+    path('actualizar-curso/<int:id_curso>/', actualizar_curso, name='actualizar_curso'),
+    path('actualizar-calificacion/<int:id_calificacion>/', actualizar_calificacion, name='actualizar_calificacion'),
 ]
 
 from django.conf import settings

@@ -171,7 +171,7 @@
                             <td class="h-[72px] px-4 py-2 text-[#0e1b13] text-sm font-normal leading-normal">{{ calificacion.fecha_registro }}</td>
                             <td class="h-[72px] px-4 py-2 text-[#0e1b13] text-sm font-normal leading-normal"><a href="Eliminarcalificaion/{{calificacion.idCalificacion}}" class="btn btn-danger">Eliminar</a>
                               <br>
-                            <a href="#" class="btn btn-danger">Actualizar</a></td>
+                            <a href="{% url 'actualizar_calificacion' id_calificacion=calificacion.idCalificacion %}" class="btn btn-warning">Actualizar</a></td>
                           </tr>
                           {% endfor %}
                         </tbody>

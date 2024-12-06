@@ -34,8 +34,7 @@
                       </defs>
                     </svg>
                   </div>
-                  <h2 class="text-[#0e1b13] text-lg font-bold leading-tight tracking-[-0.015em]">Administrador</h2>
-                </div>
+                  <a class="text-[#0e1b13] text-lg font-bold leading-tight tracking-[-0.015em]" href="{% url 'Panel_admin' %}">Administrador</a>                </div>
                 <br>
                 <div class="flex flex-1 justify-end gap-8">
                   <div class="flex items-center gap-9">
@@ -168,7 +167,8 @@
                             <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-240 h-[72px] px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal leading-normal">{{ asignatura.nombre }}</td>
                             <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-240 h-[72px] px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal leading-normal">{{ asignatura.hora_entrada }} <br>{{ asignatura.hora_salida }}</td>
                             <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-480 h-[72px] px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal leading-normal">{{ asignatura.fecha_matricula }}</td>
-                            <td class="px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal"><a href="EliminarAsignatura/{{asignatura.idClases}}" class="btn btn-danger">Eliminar</a><a href="#" class="btn btn-danger">Actualizar</a></td>
+                            <td class="px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal"><a href="EliminarAsignatura/{{asignatura.idClases}}" class="btn btn-danger">Eliminar</a>
+                              <br><a href="{% url 'actualizar_asignatura' id_clase=asignatura.idClases %}" class="btn btn-warning">Actualizar</a></td>
                             <td class="table-e4d97697-f732-4386-ac06-9502f728102e-column-600 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
                           </tr>
                           {% endfor %}
