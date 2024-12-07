@@ -151,3 +151,30 @@ def editar_profesor(request, idProfesor):
         'title': 'Editar Profesor',
         'home_url': reverse('Panel_admin'),
     })
+
+def actualizar_asignatura(request, id_clase):
+    clase = get_object_or_404(Clases, idClases=id_clase)  # Obtiene la asignatura o lanza un 404
+    if request.method == 'POST':
+        form = AgregarAsignaturas(request.POST, instance=clase)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_asignaturas')  # Redirige a la página de lista o detalle
+    else:
+        form = AgregarAsignaturas(instance=clase)
+    return render(request, 'Actualizar_asignaturas.html', {'form': form})
+
+def actualizar_curso(request, id_curso):
+    # Obtener el curso que se quiere actualizar
+    curso = get_object_or_404(Curso, idCurso=id_curso)
+    
+    # Manejo del formulario
+    if request.method == 'POST':
+        form = AgregarCursoForm(request.POST, instance=curso)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_cursos')  # Redirige a la lista de cursos tras guardar
+    else:
+        form = AgregarCursoForm(instance=curso)
+    
+    # Renderizar el formulario
+    return render(request, 'Actualizar_curso.html', {'form': form, 'curso': curso})
