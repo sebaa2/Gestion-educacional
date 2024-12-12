@@ -88,12 +88,24 @@ def Registrar_profesorForm(request):
     if request.method == 'POST':
         form = AgregarProfesor(request.POST)
         if form.is_valid():
-            form.save()  # Guarda el nuevo profesor en la base de datos
-            return redirect('Lista_profesores')  # Redirige a la lista de profesores o a otra vista
+            # Guardar el profesor
+            profesor = form.save()
+            
+            # Asignar cursos al profesor
+            cursos = form.cleaned_data.get('curso')
+            if cursos:
+                profesor.curso.set(cursos)
+            
+            return redirect('Lista_profesores')
     else:
-        form = AgregarProfesor()  # Instancia un formulario vacío
-    return render(request, 'agregar_profesor.html', {'form': form, 'title': 'Panel_admin','home_url':reverse('Panel_admin')})
-
+        form = AgregarProfesor()
+    
+    return render(request, 'agregar_profesor.html', {
+        'form': form, 
+        'title': 'Panel_admin',
+        'home_url': reverse('Panel_admin')
+    })
+    
 def Eliminar_estudiantes(request, idEstudiante):
     estudiante = get_object_or_404(Estudiante, idEstudiante=idEstudiante)
     estudiante.delete()
@@ -118,15 +130,21 @@ def editar_estudiante(request, idEstudiante):
     # Obtener el estudiante por ID
     estudiante = get_object_or_404(Estudiante, idEstudiante=idEstudiante)
 
+    # Create a custom form that excludes the password field
+    class EditarEstudianteForm(AgregarEstudiantes):
+        class Meta(AgregarEstudiantes.Meta):
+            # Exclude the password field
+            exclude = ['contraseña']
+
     if request.method == "POST":
-        # Llenar el formulario con los datos enviados y el estudiante actual
-        form = AgregarEstudiantes(request.POST, instance=estudiante)
+        # Use the custom form without the password field
+        form = EditarEstudianteForm(request.POST, instance=estudiante)
         if form.is_valid():
             form.save()  # Guardar cambios
             return redirect('lista_estudiantes')  # Redirigir a la lista de estudiantes
     else:
-        # Prellenar el formulario con los datos actuales del estudiante
-        form = AgregarEstudiantes(instance=estudiante)
+        # Use the custom form to prellenar el formulario con los datos actuales del estudiante
+        form = EditarEstudianteForm(instance=estudiante)
 
     # Renderizar el formulario en la plantilla
     return render(request, 'Actualizar_estudiantes.html', {
@@ -137,13 +155,19 @@ def editar_estudiante(request, idEstudiante):
 
 def editar_profesor(request, idProfesor):
     profesor = get_object_or_404(Profesor, idProfesor=idProfesor)
+    
+    class EditarprofesorForm(AgregarProfesor):
+        class Meta(AgregarProfesor.Meta):
+            # Exclude the password field
+            exclude = ['contraseña']
+            
     if request.method == "POST":
-        form = AgregarProfesor(request.POST, instance=profesor)
+        form = EditarprofesorForm(request.POST, instance=profesor)
         if form.is_valid():
             form.save()
             return redirect('Lista_profesores')
     else:
-        form = AgregarProfesor(instance=profesor)
+        form = EditarprofesorForm(instance=profesor)
         
     # Renderizar el formulario en la plantilla
     return render(request, 'Actualizar_profesores.html', {

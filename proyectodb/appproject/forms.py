@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from .models import Estudiante, Profesor, Curso, Clases, Calificacion, Documento, Tarea
 
 class TareaForm(forms.ModelForm):
@@ -58,9 +59,15 @@ class AgregarEstudiantes(forms.ModelForm):
         }
 
 class AgregarProfesor(forms.ModelForm):
+    curso = forms.ModelMultipleChoiceField(
+        queryset=Curso.objects.all(), 
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+
     class Meta:
         model = Profesor
-        fields = ['nombre', 'apellido', 'telefono', 'correo', 'rut', 'contraseña', 'matricula']  # Especifica los campos que deseas incluir
+        fields = ['nombre', 'apellido', 'telefono', 'correo', 'rut', 'contraseña', 'matricula']
         labels = {
             'nombre': 'Nombre',
             'apellido': 'Apellido',
@@ -80,6 +87,20 @@ class AgregarProfesor(forms.ModelForm):
             'matricula': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
         }
 
+    def clean_curso(self):
+        cursos = self.cleaned_data.get('curso')
+        
+        # Si no hay cursos seleccionados, retorna la lista vacía
+        if not cursos:
+            return cursos
+
+        # Verificar que ningún curso ya tenga un profesor asignado
+        for curso in cursos:
+            if curso.profesor_set.exists():
+                raise ValidationError(f"El curso {curso.nombre_curso} ya tiene un profesor asignado.")
+        
+        return cursos
+
 class AgregarCursoForm(forms.ModelForm):
     class Meta:
         model = Curso
@@ -94,6 +115,22 @@ class AgregarCursoForm(forms.ModelForm):
             'nombre_curso': forms.TextInput(attrs={'class': 'form-control'}),
             'clases': forms.CheckboxSelectMultiple(),  # Muestra las clases como una lista de checkboxes
         }
+    def clean_nombre_curso(self):
+        # Obtener el nombre del curso y convertirlo a minúsculas para comparación insensible a mayúsculas
+        nombre_curso = self.cleaned_data['nombre_curso'].lower()
+        
+        # Verificar si ya existe un curso con este nombre (ignorando mayúsculas/minúsculas)
+        cursos_existentes = Curso.objects.filter(nombre_curso__iexact=nombre_curso)
+        
+        # Si es un formulario de edición, excluir el curso actual de la verificación
+        if self.instance.pk:
+            cursos_existentes = cursos_existentes.exclude(pk=self.instance.pk)
+        
+        # Si existe un curso con el mismo nombre, lanzar un error de validación
+        if cursos_existentes.exists():
+            raise ValidationError("Ya existe un curso con este nombre.")
+        
+        return nombre_curso
 
 class AgregarAsignaturas(forms.ModelForm):
     class Meta:
@@ -115,6 +152,22 @@ class AgregarAsignaturas(forms.ModelForm):
             'hora_salida': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
             'fecha_horario': forms.CheckboxSelectMultiple(),
         }
+    def clean_nombre(self):
+        # Obtener el nombre de la asignatura y convertirlo a minúsculas para comparación insensible a mayúsculas
+        nombre = self.cleaned_data['nombre'].lower()
+        
+        # Verificar si ya existe una asignatura con este nombre (ignorando mayúsculas/minúsculas)
+        clases_existentes = Clases.objects.filter(nombre__iexact=nombre)
+        
+        # Si es un formulario de edición, excluir la clase actual de la verificación
+        if self.instance.pk:
+            clases_existentes = clases_existentes.exclude(pk=self.instance.pk)
+        
+        # Si existe una asignatura con el mismo nombre, lanzar un error de validación
+        if clases_existentes.exists():
+            raise ValidationError("Ya existe una asignatura con este nombre.")
+        
+        return nombre
 
 class DocumentoForm(forms.ModelForm):
     class Meta:
