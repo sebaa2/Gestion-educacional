@@ -102,12 +102,35 @@ def horario_estudiante(request, estudiante_id):
 
 # views.py
 def listar_documentos(request, curso_id=None, clase_id=None):
-    if curso_id:
-        documentos = Documento.objects.filter(curso_id=curso_id)
+    # Check if the student is authenticated
+    if not request.session.get('autenticado'):
+        return redirect('login_estudiantes')
+
+    # Get the current student's ID and course
+    estudiante_id = request.session.get('usuario_id')
+    estudiante = Estudiante.objects.get(idEstudiante=estudiante_id)
+    curso_estudiante = estudiante.curso
+
+    # If no specific course or class is provided, filter by the student's course
+    if not curso_id and not clase_id:
+        documentos = Documento.objects.filter(curso=curso_estudiante)
+    elif curso_id:
+        # Ensure the requested course matches the student's course
+        if int(curso_id) == curso_estudiante.id:
+            documentos = Documento.objects.filter(curso_id=curso_id)
+        else:
+            # If trying to access a different course, return an empty queryset
+            documentos = Documento.objects.none()
     elif clase_id:
-        documentos = Documento.objects.filter(clase_id=clase_id)
-    else:
-        documentos = Documento.objects.all()
+        # Check if the class belongs to the student's course
+        try:
+            clase = Clases.objects.get(id=clase_id)
+            if clase in curso_estudiante.clases.all():
+                documentos = Documento.objects.filter(clase_id=clase_id, curso=curso_estudiante)
+            else:
+                documentos = Documento.objects.none()
+        except Clases.DoesNotExist:
+            documentos = Documento.objects.none()
     
     return render(request, 'listar_documentos.html', {'documentos': documentos})
 
