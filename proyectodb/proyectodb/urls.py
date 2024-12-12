@@ -17,8 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from profesorapp.views import login_profesor, panel_profesor, agregar_calificacion, logout_profesor, clases_del_profesor, cursos_del_profesor, listar_calificaciones, Eliminar_calificacion, subir_documento, asignar_tarea, actualizar_calificacion
-from adminapp.views import editar_profesor, login_admin, panel_administrador, logout_admin, Registrar_estudiantesForm, Registrar_profesorForm, lista_profesores, agregar_curso, lista_cursos, agregar_asignatura, lista_asignaturas, lista_estudiantes, Eliminar_estudiantes, Eliminar_profesor, Eliminar_curso, Eliminar_asignatura, editar_estudiante, actualizar_asignatura, actualizar_curso
-from appproject.views import Principal, login_view, panel_estudiantes, logout, panel_asignaturas_estudiante, calificaciones_estudiante, horario_estudiante, listar_documentos, descargar_documento, ver_tareas, plantilla_accionesprofe
+from adminapp.views import editar_profesor, login_admin, panel_administrador, logout_admin, Registrar_estudiantesForm, Registrar_profesorForm, lista_profesores, agregar_curso, lista_cursos, agregar_asignatura, lista_asignaturas, lista_estudiantes, Eliminar_estudiantes, Eliminar_profesor, Eliminar_curso, Eliminar_asignatura, editar_estudiante, actualizar_asignatura, actualizar_curso, admin_dashboard
+from appproject.views import Principal, login_view, panel_estudiantes, logout, panel_asignaturas_estudiante, calificaciones_estudiante, horario_estudiante, listar_documentos, descargar_documento, ver_tareas, plantilla_accionesprofe, GenerarHorarioView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,6 +34,7 @@ urlpatterns = [
     path('descargar_documento/<int:documento_id>/', descargar_documento, name='descargar_documento'),
     path('tareas/', ver_tareas, name='ver_tareas'),
     path('redirigir/', plantilla_accionesprofe, name="redirigir"),
+    path('api/horarios/<int:estudiante_id>/', GenerarHorarioView.as_view(), name='generar_horario'),
     #accciones del admin
     path('Login_admin/', login_admin, name="Login_admin"),
     path('Panel_admin/', panel_administrador, name="Panel_admin"),
@@ -53,6 +54,7 @@ urlpatterns = [
     path('editar_estudiante/<int:idEstudiante>/',editar_estudiante, name='editar_estudiante'),
     path('editar_profesor/<int:idProfesor>/',editar_profesor, name='editar_profesor'),
     path('actualizar-asignatura/<int:id_clase>/', actualizar_asignatura, name='actualizar_asignatura'),
+    path('dashboard/', admin_dashboard, name='admin_dashboard'),
     #acciones del profesor
     path('Login_profesor/', login_profesor, name='login_profesor'),
     path('Logout_profesor/', logout_profesor, name='logout_profesor'),
