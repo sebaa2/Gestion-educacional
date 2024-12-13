@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse
-from appproject.models import Administrador, Estudiante, Profesor, Curso, Clases
+from appproject.models import Administrador, Estudiante, Profesor, Curso, Clases, Tarea, Calificacion
 from appproject.forms import LoginForm, AgregarEstudiantes, AgregarProfesor, AgregarCursoForm, AgregarAsignaturas
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
@@ -203,3 +203,22 @@ def actualizar_curso(request, id_curso):
     
     # Renderizar el formulario
     return render(request, 'Actualizar_curso.html', {'form': form, 'curso': curso})
+
+def admin_dashboard(request):
+    if not request.session.get('autenticado'):
+        return redirect('/login_admin')  # Redirige a la página de login si no está autenticado
+    # Obtener estadísticas clave
+    total_profesores = Profesor.objects.count()
+    total_estudiantes = Estudiante.objects.count()
+    total_cursos = Curso.objects.count()
+    total_clases = Clases.objects.count()
+    ultimas_calificaciones = Calificacion.objects.all().order_by('-fecha_registro')[:5]
+
+    context = {
+        'total_profesores': total_profesores,
+        'total_estudiantes': total_estudiantes,
+        'total_cursos': total_cursos,
+        'total_clases': total_clases,
+        'ultimas_calificaciones': ultimas_calificaciones,
+    }
+    return render(request, 'admin_dashboard.html', context)
