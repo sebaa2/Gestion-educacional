@@ -118,3 +118,15 @@ class Tarea(models.Model):
 
     def __str__(self):
         return self.titulo
+
+class Prueba(models.Model):
+    titulo = models.CharField(max_length=100)
+    descripcion = models.TextField()
+    documento = models.FileField(upload_to='pruebas/')  # Almacena el archivo en la carpeta 'pruebas'
+    fecha = models.DateField()  # Fecha en que se aplicará la prueba
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE, related_name='pruebas')  # Relaciona la prueba con un curso
+    profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE, related_name='pruebas')  # Relaciona la prueba con un profesor
+    clase = models.ForeignKey(Clases, on_delete=models.CASCADE, related_name='pruebas')  # Relaciona la prueba con una asignatura
+
+    def __str__(self):
+        return f"Prueba: {self.titulo} - {self.curso.nombre_curso} - {self.profesor.nombre}"
