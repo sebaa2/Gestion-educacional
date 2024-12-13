@@ -160,7 +160,8 @@ def editar_profesor(request, idProfesor):
         class Meta(AgregarProfesor.Meta):
             # Exclude the password field
             exclude = ['contraseña']
-            
+        
+
     if request.method == "POST":
         form = EditarprofesorForm(request.POST, instance=profesor)
         if form.is_valid():

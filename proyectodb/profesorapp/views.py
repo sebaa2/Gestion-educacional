@@ -123,17 +123,22 @@ def subir_documento(request):
     if not request.session.get('autenticado', False):
         return redirect('login_profesor')  # Redirigir si el profesor no está autenticado
 
+    # Get the logged-in professor's ID
+    profesor_id = request.session.get('usuario_id')
+
     if request.method == 'POST':
-        form = DocumentoForm(request.POST, request.FILES)
+        # Create the form with filtered choices for the specific professor
+        form = DocumentoForm(request.POST, request.FILES, profesor_id=profesor_id)
         if form.is_valid():
             # Asociar el profesor autenticado al documento
             documento = form.save(commit=False)
             # Obtener el profesor desde la sesión
-            documento.profesor_id = request.session.get('usuario_id')
+            documento.profesor_id = profesor_id
             documento.save()
             return redirect('panel_profesor')  # Redirige a una página de éxito
     else:
-        form = DocumentoForm()
+        # Create the form with filtered choices for the specific professor
+        form = DocumentoForm(profesor_id=profesor_id)
 
     return render(request, 'subir_documento.html', {'form': form})
 

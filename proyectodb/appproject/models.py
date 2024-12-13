@@ -11,6 +11,7 @@ class Profesor(models.Model):
     contraseña = models.CharField(max_length=45)
     matricula = models.DateField()
 
+
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
 
@@ -39,6 +40,7 @@ class Curso(models.Model):
     idCurso = models.AutoField(primary_key=True)
     nombre_curso = models.CharField(max_length=45)
     clases = models.ManyToManyField(Clases)
+    profesores = models.ManyToManyField(Profesor, related_name='cursos')
 
     def __str__(self):
         return self.nombre_curso

@@ -185,6 +185,16 @@ class AgregarAsignaturas(forms.ModelForm):
         return nombre
 
 class DocumentoForm(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        profesor_id = kwargs.pop('profesor_id', None)
+        super().__init__(*args, **kwargs)
+        if profesor_id:
+            # Filter courses to only those with classes taught by this professor
+            self.fields['curso'].queryset = Curso.objects.filter(clases__profesor_id=profesor_id).distinct()
+            # Filter classes to only those taught by this professor
+            self.fields['clase'].queryset = Clases.objects.filter(profesor_id=profesor_id)
+
     class Meta:
         model = Documento
         fields = ['titulo', 'archivo', 'descripcion', 'clase', 'curso']
