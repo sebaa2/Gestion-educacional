@@ -76,7 +76,7 @@ class AgregarEstudiantes(forms.ModelForm):
 class AgregarProfesor(forms.ModelForm):
     curso = forms.ModelMultipleChoiceField(
         queryset=Curso.objects.all(), 
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.Select,
         required=False
     )
 
@@ -102,19 +102,7 @@ class AgregarProfesor(forms.ModelForm):
             'matricula': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
         }
 
-    def clean_curso(self):
-        cursos = self.cleaned_data.get('curso')
-        
-        # Si no hay cursos seleccionados, retorna la lista vacía
-        if not cursos:
-            return cursos
-
-        # Verificar que ningún curso ya tenga un profesor asignado
-        for curso in cursos:
-            if curso.profesor_set.exists():
-                raise ValidationError(f"El curso {curso.nombre_curso} ya tiene un profesor asignado.")
-        
-        return cursos
+    
 
 class AgregarCursoForm(forms.ModelForm):
     class Meta:
@@ -150,7 +138,7 @@ class AgregarCursoForm(forms.ModelForm):
 class AgregarAsignaturas(forms.ModelForm):
     class Meta:
         model = Clases
-        fields = ['nombre', 'fecha_matricula', 'profesor', 'hora_entrada', 'hora_salida', 'fecha_horario']
+        fields = ['nombre', 'fecha_matricula', 'profesor']
         labels = {
             'nombre': 'Nombre asignatura',
             'fecha_matricula': 'Fecha inscripción',

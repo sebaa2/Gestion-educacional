@@ -1,3 +1,4 @@
+from django.forms import ValidationError
 from django.shortcuts import render
 from django.urls import reverse
 from appproject.models import Administrador, Estudiante, Profesor, Curso, Clases, Tarea, Calificacion
@@ -90,12 +91,6 @@ def Registrar_profesorForm(request):
         if form.is_valid():
             # Guardar el profesor
             profesor = form.save()
-            
-            # Asignar cursos al profesor
-            cursos = form.cleaned_data.get('curso')
-            if cursos:
-                profesor.curso.set(cursos)
-            
             return redirect('Lista_profesores')
     else:
         form = AgregarProfesor()
