@@ -10,17 +10,11 @@ class Profesor(models.Model):
     rut = models.CharField(max_length=45)
     contraseña = models.CharField(max_length=45)
     matricula = models.DateField()
+    Curso = models.ManyToManyField('Curso')
 
 
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
-
-class Fecha_horario(models.Model):
-    idFecha_horario = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=45)
-
-    def __str__(self):
-        return f"{self.nombre}"
 
 
 class Clases(models.Model):
@@ -28,7 +22,11 @@ class Clases(models.Model):
     nombre = models.CharField(max_length=45)
     fecha_matricula = models.DateField()
     profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE)
+<<<<<<< HEAD
     fecha_horario = models.ManyToManyField(Fecha_horario)
+=======
+
+>>>>>>> 42c953bedb31708a0ffeae8a712a14fc4d5e6b54
 
     def __str__(self):
         return self.nombre
@@ -38,7 +36,11 @@ class Curso(models.Model):
     idCurso = models.AutoField(primary_key=True)
     nombre_curso = models.CharField(max_length=45)
     clases = models.ManyToManyField(Clases)
+<<<<<<< HEAD
     profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE)
+=======
+    
+>>>>>>> 42c953bedb31708a0ffeae8a712a14fc4d5e6b54
 
     def __str__(self):
         return self.nombre_curso

@@ -2,7 +2,11 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.shortcuts import get_object_or_404, render, redirect
+<<<<<<< HEAD
 from .models import Estudiante, Calificacion, Clases, Documento, Tarea, Prueba
+=======
+from .models import Curso, Estudiante, Calificacion, Clases, Documento, Tarea
+>>>>>>> 42c953bedb31708a0ffeae8a712a14fc4d5e6b54
 from datetime import datetime, timezone
 from .forms import LoginForm 
 from django.urls import reverse
@@ -47,7 +51,10 @@ def panel_estudiantes(request):
     if estudiante_id:
         # Obtener el estudiante usando el id de la sesión
         estudiante = Estudiante.objects.get(idEstudiante=estudiante_id)
-        return render(request, 'Panel_estudiantes.html', {'estudiante': estudiante})
+        return render(request, 'Panel_estudiantes.html', {
+            'estudiante': estudiante,
+            'curso': estudiante.curso  # Add this line to pass the course
+        })
     else:
         # Si no se encuentra el id del estudiante, redirigir al login
         return redirect('login_estudiantes')
@@ -126,17 +133,36 @@ def listar_documentos(request, curso_id=None, clase_id=None):
         try:
             clase = Clases.objects.get(id=clase_id)
             if clase in curso_estudiante.clases.all():
-                documentos = Documento.objects.filter(clase_id=clase_id, curso=curso_estudiante)
+                documentos = Documento.objects.filter(
+                    clase_id=clase_id, 
+                    curso=curso_estudiante
+                )
             else:
                 documentos = Documento.objects.none()
         except Clases.DoesNotExist:
             documentos = Documento.objects.none()
     
-    return render(request, 'listar_documentos.html', {'documentos': documentos})
+    return render(request, 'listar_documentos.html', {
+        'documentos': documentos,
+        'curso': curso_estudiante  # Add this line to pass the course to the template
+    })
 
 def descargar_documento(request, documento_id):
+    # Additional security check for document download
     documento = get_object_or_404(Documento, id=documento_id)
-    archivo_path = documento.archivo.path  # Obtiene la ruta absoluta del archivo en el sistema de archivos
+    
+    # Verify the student is authenticated and belongs to the right course
+    if not request.session.get('autenticado'):
+        return redirect('login_estudiantes')
+
+    estudiante_id = request.session.get('usuario_id')
+    estudiante = Estudiante.objects.get(idEstudiante=estudiante_id)
+    
+    # Check if the document's course matches the student's course
+    if documento.curso != estudiante.curso:
+        return HttpResponse("No tienes permiso para descargar este documento", status=403)
+
+    archivo_path = documento.archivo.path
     
     with open(archivo_path, 'rb') as f:
         response = HttpResponse(f.read(), content_type='application/octet-stream')
@@ -148,10 +174,16 @@ def ver_tareas(request):
     if request.session.get('autenticado'):
         estudiante_id = request.session.get('usuario_id')
         estudiante = Estudiante.objects.get(idEstudiante=estudiante_id)
-        tareas = Tarea.objects.filter(curso=estudiante.curso)  # Filtrar tareas según el curso del estudiante
+        
+        # Filtrar tareas según el curso del estudiante
+        # Added additional checks to ensure class-specific access
+        tareas = Tarea.objects.filter(
+            curso=estudiante.curso,
+            clase__in=estudiante.curso.clases.all()
+        )
         return render(request, 'ver_tareas.html', {'tareas': tareas})
     else:
-        return redirect('login_estudiante')  # Redireccionar al login si no está autenticado
+        return redirect('login_estudiantes')
     
 def plantilla_accionesprofe(request):
     documento = Documento.objects.first()  # Obtén un documento para el enlace de descarga
