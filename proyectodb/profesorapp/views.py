@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render, redirect
 from appproject.models import Profesor, Estudiante, Calificacion, Clases, Curso
-from appproject.forms import LoginForm, CalificacionForm, DocumentoForm, TareaForm
+from appproject.forms import LoginForm, CalificacionForm, DocumentoForm, TareaForm, PruebaForm
 from django.urls import reverse
 
 def Principal(request):
@@ -172,3 +172,21 @@ def actualizar_calificacion(request, id_calificacion):
     
     # Renderizar el formulario
     return render(request, 'Actualizar_notas.html', {'form': form, 'calificacion': calificacion})
+
+def crear_prueba(request):
+    if not request.session.get('autenticado'):  # Verificar si el profesor está autenticado
+        return redirect('login_profesor')  # Redirigir al login si no está autenticado
+    
+    profesor_id = request.session.get('usuario_id')  # Obtener el ID del profesor desde la sesión
+
+    if request.method == 'POST':
+        form = PruebaForm(request.POST, request.FILES, profesor_id=profesor_id)
+        if form.is_valid():
+            prueba = form.save(commit=False)
+            prueba.profesor_id = profesor_id  # Asignar el profesor autenticado
+            prueba.save()
+            return redirect('/Panel_profesor')  # Redirigir al panel del profesor después de crear la prueba
+    else:
+        form = PruebaForm(profesor_id=profesor_id)
+
+    return render(request, 'crear_prueba.html', {'form': form, 'title': 'Crear Prueba'})

@@ -1,6 +1,21 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Estudiante, Profesor, Curso, Clases, Calificacion, Documento, Tarea
+from .models import Estudiante, Profesor, Curso, Clases, Calificacion, Documento, Tarea, Prueba
+
+class PruebaForm(forms.ModelForm):
+    class Meta:
+        model = Prueba
+        fields = ['titulo', 'descripcion', 'documento', 'fecha', 'curso', 'clase']
+
+    def __init__(self, *args, **kwargs):
+        profesor_id = kwargs.pop('profesor_id', None)  # Tomar el ID del profesor desde la sesión
+        super().__init__(*args, **kwargs)
+        
+        if profesor_id:
+            # Filtrar cursos y clases según el ID del profesor
+            self.fields['curso'].queryset = Curso.objects.filter(clases__profesor_id=profesor_id).distinct()
+            self.fields['clase'].queryset = Clases.objects.filter(profesor_id=profesor_id)
+
 
 class TareaForm(forms.ModelForm):
     class Meta:
