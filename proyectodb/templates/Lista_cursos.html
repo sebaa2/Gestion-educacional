@@ -176,7 +176,12 @@
                                             <span class="text-gray-500">No asignado</span>
                                         {% endif %}
                                     </td>
-                                    <td class="px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal"><a href="EliminarCurso/{{curso.idCurso}}" class="btn btn-danger">Eliminar</a><a href="{% url 'actualizar_curso' id_curso=curso.idCurso %}" class="btn btn-warning">Actualizar</a></td>
+                                    <td class="px-4 py-2 w-[400px] text-[#4e976d] text-sm font-normal">
+                                      <div class="flex gap-2">
+                                        <a href="EliminarCurso/{{curso.idCurso}}" class="btn btn-danger">Eliminar</a>
+                                        <a href="{% url 'actualizar_curso' id_curso=curso.idCurso %}" class="btn btn-warning">Actualizar</a>
+                                      </div>
+                                    </td>
                         
                                     <!-- Estado del curso -->
                                     <td class="px-4 py-2 w-60 text-sm font-normal">

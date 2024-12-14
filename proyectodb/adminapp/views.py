@@ -89,12 +89,10 @@ def Registrar_profesorForm(request):
     if request.method == 'POST':
         form = AgregarProfesor(request.POST)
         if form.is_valid():
-            # Guardar el profesor
-            profesor = form.save()
-            return redirect('Lista_profesores')
+            form.save()  # Guarda el nuevo profesor en la base de datos
+            return redirect('Lista_profesores')  # Redirige a una página de éxito u otra vista
     else:
-        form = AgregarProfesor()
-    
+        form = AgregarProfesor()  # Instancia un formulario vacío
     return render(request, 'agregar_profesor.html', {
         'form': form, 
         'title': 'Panel_admin',
