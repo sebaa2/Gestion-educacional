@@ -10,6 +10,7 @@ class Profesor(models.Model):
     rut = models.CharField(max_length=45)
     contraseña = models.CharField(max_length=45)
     matricula = models.DateField()
+    
 
 
     def __str__(self):
