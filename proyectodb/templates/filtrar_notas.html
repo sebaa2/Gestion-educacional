@@ -1,0 +1,27 @@
+<form method="get" style="max-width: 900px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+    {{ form.as_p }}
+    <div style="text-align: center; margin-top: 20px;">
+        <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">
+            Filtrar
+        </button>
+    </div>
+</form>
+
+{% if estudiantes %}
+    <div style="max-width: 900px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; margin-top: 20px;">
+        <h2 style="text-align: center; color: #333; margin-bottom: 20px;">Estudiantes</h2>
+        <ul style="list-style-type: none; padding: 0;">
+            {% for estudiante in estudiantes %}
+                <li style="padding: 10px; border-bottom: 1px solid #ddd; font-size: 16px;">
+                    {{ estudiante.nombre }} {{ estudiante.apellido }}
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'asignar_notas' prueba.id %}" style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px; font-size: 16px; text-align: center; margin-top: 20px;">Asignar Notas</a>
+    </div>
+{% endif %}
+
+<!-- Botón para volver al panel -->
+<div style="max-width: 900px; margin: 0 auto; padding: 20px; text-align: center; margin-top: 20px;">
+    <a href="{% url 'panel_profesor' %}" style="display: inline-block; padding: 10px 20px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 4px; font-size: 16px; text-align: center;">Volver al Panel</a>
+</div>

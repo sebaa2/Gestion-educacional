@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Panel de Estudiante</h2>
+    <h2 class="text-center mb-4">Tareas y Material del profesor</h2>
     
     <div class="row justify-content-center">
         <!-- Card para Ver Tareas -->
@@ -24,7 +24,6 @@
 
         <!-- Card para Material de Estudio -->
         <div class="col-md-5 mb-4">
-            {% if documento %}
                 <a href="{% url 'listar_documentos' %}" class="text-decoration-none">
                     <div class="card h-100 bg-light border-0 shadow-lg">
                         <div class="card-body d-flex align-items-center">
@@ -38,11 +37,6 @@
                         </div>
                     </div>
                 </a>
-            {% else %}
-                <div class="alert alert-warning text-center" role="alert">
-                    <i class="bi bi-exclamation-triangle-fill"></i> No hay documentos disponibles en este momento.
-                </div>
-            {% endif %}
         </div>
     </div>
 

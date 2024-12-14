@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Estudiante, Calificacion, Clases, Documento, Tarea
+from .models import Estudiante, Calificacion, Clases, Documento, Tarea, Prueba
 from datetime import datetime, timezone
 from .forms import LoginForm 
 from django.urls import reverse
@@ -156,3 +156,17 @@ def ver_tareas(request):
 def plantilla_accionesprofe(request):
     documento = Documento.objects.first()  # Obtén un documento para el enlace de descarga
     return render(request, 'redirigir.html', {'documento': documento})
+
+def ver_pruebas(request):
+    if request.session.get('autenticado'):
+        estudiante_id = request.session.get('usuario_id')
+        estudiante = Estudiante.objects.get(idEstudiante=estudiante_id)
+        
+        # Filtrar las pruebas según el curso del estudiante
+        pruebas = Prueba.objects.filter(curso=estudiante.curso)
+        
+        return render(request, 'ver_pruebas.html', {'pruebas': pruebas})
+    else:
+        return redirect('login_estudiante')
+
+    

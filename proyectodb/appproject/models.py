@@ -28,8 +28,6 @@ class Clases(models.Model):
     nombre = models.CharField(max_length=45)
     fecha_matricula = models.DateField()
     profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE)
-    hora_entrada = models.TimeField()
-    hora_salida = models.TimeField()
     fecha_horario = models.ManyToManyField(Fecha_horario)
 
     def __str__(self):
@@ -40,7 +38,7 @@ class Curso(models.Model):
     idCurso = models.AutoField(primary_key=True)
     nombre_curso = models.CharField(max_length=45)
     clases = models.ManyToManyField(Clases)
-    profesores = models.ManyToManyField(Profesor, related_name='cursos')
+    profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nombre_curso
@@ -71,21 +69,6 @@ class Asistencia(models.Model):
 
     def __str__(self):
         return f"{self.estudiante} - {self.fecha} - Presente: {self.presente}"
-
-
-
-class Calificacion(models.Model):
-    idCalificacion = models.AutoField(primary_key=True)
-    nota = models.DecimalField(max_digits=5, decimal_places=1)
-    fecha_registro = models.DateField()
-    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
-    profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE)
-    clase = models.ForeignKey(Clases, on_delete=models.CASCADE, default=10)
-    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"{self.nota} - {self.estudiante.nombre} {self.estudiante.apellido}"
-    
     
 class Administrador(models.Model):
     idAdministrador = models.AutoField(primary_key=True)
@@ -132,3 +115,15 @@ class Prueba(models.Model):
 
     def __str__(self):
         return f"Prueba: {self.titulo} - {self.curso.nombre_curso} - {self.profesor.nombre}"
+
+class Calificacion(models.Model):
+    idCalificacion = models.AutoField(primary_key=True)
+    nota = models.DecimalField(max_digits=5, decimal_places=1)
+    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
+    profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE)
+    clase = models.ForeignKey(Clases, on_delete=models.CASCADE, default=10)
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
+    prueba = models.ForeignKey(Prueba, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.nota} - {self.estudiante.nombre} {self.estudiante.apellido}"
