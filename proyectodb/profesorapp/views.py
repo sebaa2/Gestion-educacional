@@ -1,7 +1,8 @@
+from datetime import timezone
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render, redirect
-from appproject.models import Profesor, Estudiante, Calificacion, Clases, Curso
-from appproject.forms import LoginForm, CalificacionForm, DocumentoForm, TareaForm, PruebaForm
+from appproject.models import Profesor, Estudiante, Calificacion, Clases, Curso, Prueba
+from appproject.forms import LoginForm, DocumentoForm, TareaForm, PruebaForm, FiltroNotasForm
 from django.urls import reverse
 
 def Principal(request):
@@ -38,36 +39,6 @@ def panel_profesor(request):
 def logout_profesor(request):
     request.session.pop('autenticado',None)
     return redirect('login_profesor')
-
-#cambios en este metodo enfocado en las notas, falta testeo 
-def agregar_calificacion(request, clase_id):
-    # Verificar si el profesor está autenticado
-    if not request.session.get('autenticado'):
-        return redirect('login_profesor')
-
-    # Obtener el profesor y la clase seleccionada
-    profesor_id = request.session.get('usuario_id')
-    profesor = get_object_or_404(Profesor, idProfesor=profesor_id)
-    clase = get_object_or_404(Clases, idClases=clase_id, profesor=profesor)
-
-    if request.method == 'POST':
-        form = CalificacionForm(request.POST)
-        if form.is_valid():
-            calificacion = form.save(commit=False)
-            calificacion.profesor = profesor
-            calificacion.clase = clase  # Asignar la clase automáticamente
-            calificacion.save()
-            return redirect('listar_calificaciones')  # Redirigir al listado de clases
-
-    else:
-        form = CalificacionForm()
-
-    return render(request, 'Agregar_calificacion.html', {
-        'form': form,
-        'clase': clase,
-        'nombre_completo': request.session.get('nombre_completo'),'title':'panel_profesor',
-        'home_url':reverse('panel_profesor')
-    })
 
 def clases_del_profesor(request):
     # Verifica si el profesor está autenticado
@@ -157,22 +128,6 @@ def asignar_tarea(request):
         form = TareaForm()
     return render(request, 'asignar_tarea.html', {'form': form})
 
-def actualizar_calificacion(request, id_calificacion):
-    # Obtener la calificación que se quiere actualizar
-    calificacion = get_object_or_404(Calificacion, idCalificacion=id_calificacion)
-    
-    # Manejo del formulario
-    if request.method == 'POST':
-        form = CalificacionForm(request.POST, instance=calificacion)
-        if form.is_valid():
-            form.save()
-            return redirect('listar_calificaciones')  # Redirige a la lista de calificaciones tras guardar
-    else:
-        form = CalificacionForm(instance=calificacion)
-    
-    # Renderizar el formulario
-    return render(request, 'Actualizar_notas.html', {'form': form, 'calificacion': calificacion})
-
 def crear_prueba(request):
     if not request.session.get('autenticado'):  # Verificar si el profesor está autenticado
         return redirect('login_profesor')  # Redirigir al login si no está autenticado
@@ -190,3 +145,61 @@ def crear_prueba(request):
         form = PruebaForm(profesor_id=profesor_id)
 
     return render(request, 'crear_prueba.html', {'form': form, 'title': 'Crear Prueba'})
+
+def filtrar_notas(request):
+    if not request.session.get('autenticado'):  # Verificar autenticación
+        return redirect('login_profesor')
+    
+    profesor_id = request.session.get('usuario_id')  # Obtener el ID del profesor
+    form = FiltroNotasForm(request.GET or None, profesor_id=profesor_id)  # Pasar profesor_id
+
+    estudiantes = []
+    prueba = None
+
+    if form.is_valid():
+        curso = form.cleaned_data['curso']
+        clase = form.cleaned_data['clase']
+        prueba = form.cleaned_data['prueba']
+
+        # Filtrar estudiantes asociados al curso
+        estudiantes = Estudiante.objects.filter(curso=curso)
+
+        # Crear calificaciones si no existen
+        for estudiante in estudiantes:
+            Calificacion.objects.get_or_create(
+            estudiante=estudiante,
+            prueba=prueba,
+            curso=curso,
+            clase=clase,
+            profesor=prueba.profesor,
+            defaults={'nota': 1},
+            )
+            return redirect(reverse('asignar_notas', args=[prueba.id]))
+
+    return render(request, 'filtrar_notas.html', {
+        'form': form,
+        'estudiantes': estudiantes,
+        'prueba': prueba,
+    })
+
+def asignar_notas(request, prueba_id):
+    prueba = get_object_or_404(Prueba, id=prueba_id)
+    estudiantes = Estudiante.objects.filter(curso=prueba.curso)
+
+    if request.method == "POST":
+        for estudiante in estudiantes:
+            nota = request.POST.get(f'nota_{estudiante.idEstudiante}')
+            if nota:
+                calificacion, created = Calificacion.objects.get_or_create(
+                    estudiante=estudiante,
+                    prueba=prueba,
+                    curso=prueba.curso,  
+                    profesor=prueba.profesor,  
+                    defaults={'nota': float(nota)}
+                )
+        if not created:
+            calificacion.nota = float(nota)
+            calificacion.save()
+        return redirect('Panel_profesor')
+
+    return render(request, 'asignar_notas.html', {'prueba': prueba, 'estudiantes': estudiantes})

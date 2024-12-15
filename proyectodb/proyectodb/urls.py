@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from profesorapp.views import login_profesor, panel_profesor, agregar_calificacion, logout_profesor, clases_del_profesor, cursos_del_profesor, listar_calificaciones, Eliminar_calificacion, subir_documento, asignar_tarea, actualizar_calificacion, crear_prueba
+from profesorapp.views import login_profesor, panel_profesor, logout_profesor, clases_del_profesor, cursos_del_profesor, listar_calificaciones, Eliminar_calificacion, subir_documento, asignar_tarea, crear_prueba, filtrar_notas, asignar_notas
 from adminapp.views import editar_profesor, login_admin, panel_administrador, logout_admin, Registrar_estudiantesForm, Registrar_profesorForm, lista_profesores, agregar_curso, lista_cursos, agregar_asignatura, lista_asignaturas, lista_estudiantes, Eliminar_estudiantes, Eliminar_profesor, Eliminar_curso, Eliminar_asignatura, editar_estudiante, actualizar_asignatura, actualizar_curso, admin_dashboard
-from appproject.views import Principal, login_view, panel_estudiantes, logout, panel_asignaturas_estudiante, calificaciones_estudiante, horario_estudiante, listar_documentos, descargar_documento, ver_tareas, plantilla_accionesprofe
+from appproject.views import Principal, login_view, panel_estudiantes, logout, panel_asignaturas_estudiante, calificaciones_estudiante, horario_estudiante, listar_documentos, descargar_documento, ver_tareas, plantilla_accionesprofe, ver_pruebas
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,6 +34,7 @@ urlpatterns = [
     path('descargar_documento/<int:documento_id>/', descargar_documento, name='descargar_documento'),
     path('tareas/', ver_tareas, name='ver_tareas'),
     path('redirigir/', plantilla_accionesprofe, name="redirigir"),
+    path('ver_pruebas/', ver_pruebas, name="ver_pruebas"),
     #accciones del admin
     path('Login_admin/', login_admin, name="Login_admin"),
     path('Panel_admin/', panel_administrador, name="Panel_admin"),
@@ -58,7 +59,6 @@ urlpatterns = [
     path('Login_profesor/', login_profesor, name='login_profesor'),
     path('Logout_profesor/', logout_profesor, name='logout_profesor'),
     path('Panel_profesor/', panel_profesor, name='panel_profesor'),
-    path('Agregar_calificacion/<int:clase_id>/', agregar_calificacion, name="agregar_calificacion"),
     path('clases_profesor/', clases_del_profesor, name='clases_profesor'),
     path('cursos_profesor/', cursos_del_profesor, name='cursos_profesor'),
     path('listar_calificaciones/', listar_calificaciones, name='listar_calificaciones'),
@@ -66,8 +66,9 @@ urlpatterns = [
     path('subir_documento/', subir_documento, name='subir_documento'),
     path('asignar_tarea/', asignar_tarea, name='asignar_tarea'),
     path('actualizar-curso/<int:id_curso>/', actualizar_curso, name='actualizar_curso'),
-    path('actualizar-calificacion/<int:id_calificacion>/', actualizar_calificacion, name='actualizar_calificacion'),
     path('crear-prueba/', crear_prueba, name='crear_prueba'),
+    path('filtrar-notas/', filtrar_notas, name='filtrar_notas'),
+    path('asignar-notas/<int:prueba_id>/', asignar_notas, name='asignar_notas'),
 ]
 
 from django.conf import settings

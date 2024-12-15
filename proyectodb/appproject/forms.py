@@ -12,9 +12,12 @@ class PruebaForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         
         if profesor_id:
-            # Filtrar cursos y clases según el ID del profesor
-            self.fields['curso'].queryset = Curso.objects.filter(clases__profesor_id=profesor_id).distinct()
+            # Filtrar los cursos asociados al profesor autenticado
+            self.fields['curso'].queryset = Curso.objects.filter(profesores__in=[profesor_id]).distinct()
+
+            # Filtrar las clases asociadas al profesor autenticado
             self.fields['clase'].queryset = Clases.objects.filter(profesor_id=profesor_id)
+
 
 
 class TareaForm(forms.ModelForm):
@@ -28,17 +31,6 @@ class TareaForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username  = forms.CharField()
     password =forms.CharField(widget = forms.PasswordInput)
-
-class CalificacionForm(forms.ModelForm):
-    class Meta:
-        model = Calificacion
-        fields = ['nota', 'fecha_registro', 'estudiante', 'curso']
-        labels = {
-            'fecha_registro': 'Fecha de registro: '
-        }
-        widgets = {
-            'fecha_registro': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'})
-        }
         
 class AgregarEstudiantes(forms.ModelForm):
     class Meta:  # Definir la clase Meta para vincular el modelo
@@ -138,21 +130,21 @@ class AgregarCursoForm(forms.ModelForm):
 class AgregarAsignaturas(forms.ModelForm):
     class Meta:
         model = Clases
+<<<<<<< HEAD
+        fields = ['nombre', 'fecha_matricula', 'profesor', 'fecha_horario']
+=======
         fields = ['nombre', 'fecha_matricula', 'profesor']
+>>>>>>> 42c953bedb31708a0ffeae8a712a14fc4d5e6b54
         labels = {
             'nombre': 'Nombre asignatura',
             'fecha_matricula': 'Fecha inscripción',
             'profesor': 'Profesor',
-            'hora_entrada': 'Hora entrada',
-            'hora_salida': 'Hora salida',
             'fecha_horario': 'Fecha horario'
         }
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
             'fecha_matricula': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'profesor': forms.Select(attrs={'class': 'form-control'}),
-            'hora_entrada': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
-            'hora_salida': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
             'fecha_horario': forms.CheckboxSelectMultiple(),
         }
     def clean_nombre(self):
@@ -186,3 +178,20 @@ class DocumentoForm(forms.ModelForm):
     class Meta:
         model = Documento
         fields = ['titulo', 'archivo', 'descripcion', 'clase', 'curso']
+
+class FiltroNotasForm(forms.Form):
+    curso = forms.ModelChoiceField(queryset=Curso.objects.none(), label="Curso")
+    clase = forms.ModelChoiceField(queryset=Clases.objects.none(), label="Clase")
+    prueba = forms.ModelChoiceField(queryset=Prueba.objects.none(), label="Prueba")
+
+    def __init__(self, *args, **kwargs):
+        profesor_id = kwargs.pop('profesor_id', None)  # Extraer profesor_id
+        super().__init__(*args, **kwargs)
+        if profesor_id:
+            self.fields['curso'].queryset = Curso.objects.filter(profesor=profesor_id).distinct()
+            self.fields['clase'].queryset = Clases.objects.filter(profesor=profesor_id).distinct()
+            self.fields['prueba'].queryset = Prueba.objects.filter(profesor=profesor_id).distinct()
+        else:
+            self.fields['curso'].queryset = Curso.objects.all()
+            self.fields['clase'].queryset = Clases.objects.all()
+            self.fields['prueba'].queryset = Prueba.objects.all()
