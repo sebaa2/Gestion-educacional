@@ -65,9 +65,9 @@ class AgregarEstudiantes(forms.ModelForm):
         }
 
 class AgregarProfesor(forms.ModelForm):
-    curso = forms.ModelMultipleChoiceField(
-        queryset=Curso.objects.all(), 
-        widget=forms.CheckboxSelectMultiple,
+    curso = forms.ModelChoiceField(
+        queryset=Curso.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
         required=False
     )
 
