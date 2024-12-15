@@ -15,6 +15,9 @@
                     <!-- Enlace para descargar la prueba -->
                     {% if prueba.documento %}
                         <a href="{{ prueba.documento.url }}" class="btn btn-info btn-sm" download>Descargar Prueba</a>
+                        
+                        <!-- Enlace para subir la prueba, pasando el ID de la prueba -->
+                        <a href="{% url 'subir_prueba' %}?prueba_id={{ prueba.id }}" class="btn btn-primary">Subir Prueba</a>
                     {% else %}
                         <p>No hay archivo disponible para esta prueba.</p>
                     {% endif %}
@@ -34,3 +37,4 @@
     </div>
 </div>
 {% endblock %}
+

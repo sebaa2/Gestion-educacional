@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Estudiante, Profesor, Curso, Clases, Calificacion, Documento, Tarea, Prueba
+from .models import Estudiante, Profesor, Curso, Clases, Calificacion, Documento, Tarea, Prueba, PruebaSubida, Horario
 
 class PruebaForm(forms.ModelForm):
     class Meta:
@@ -10,10 +10,10 @@ class PruebaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         profesor_id = kwargs.pop('profesor_id', None)  # Tomar el ID del profesor desde la sesión
         super().__init__(*args, **kwargs)
-        
+
         if profesor_id:
             # Filtrar los cursos asociados al profesor autenticado
-            self.fields['curso'].queryset = Curso.objects.filter(profesores__in=[profesor_id]).distinct()
+            self.fields['curso'].queryset = Curso.objects.filter(profesor_id=profesor_id).distinct()
 
             # Filtrar las clases asociadas al profesor autenticado
             self.fields['clase'].queryset = Clases.objects.filter(profesor_id=profesor_id)
@@ -49,7 +49,6 @@ class AgregarEstudiantes(forms.ModelForm):
             "telefono": 'Teléfono ',
             "matricula": 'Matrícula ',
             "rut": 'Rut ',
-            "contraseña": 'Contraseña ',
             "curso": 'Curso '
         }
         
@@ -94,8 +93,6 @@ class AgregarProfesor(forms.ModelForm):
             'matricula': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
         }
 
-    
-
 class AgregarCursoForm(forms.ModelForm):
     class Meta:
         model = Curso
@@ -130,11 +127,8 @@ class AgregarCursoForm(forms.ModelForm):
 class AgregarAsignaturas(forms.ModelForm):
     class Meta:
         model = Clases
-<<<<<<< HEAD
         fields = ['nombre', 'fecha_matricula', 'profesor', 'fecha_horario']
-=======
         fields = ['nombre', 'fecha_matricula', 'profesor']
->>>>>>> 42c953bedb31708a0ffeae8a712a14fc4d5e6b54
         labels = {
             'nombre': 'Nombre asignatura',
             'fecha_matricula': 'Fecha inscripción',
@@ -195,3 +189,37 @@ class FiltroNotasForm(forms.Form):
             self.fields['curso'].queryset = Curso.objects.all()
             self.fields['clase'].queryset = Clases.objects.all()
             self.fields['prueba'].queryset = Prueba.objects.all()
+
+class PruebaSubidaForm(forms.ModelForm):
+    class Meta:
+        model = PruebaSubida
+        fields = ['archivo']
+
+class HorarioForm(forms.ModelForm):
+    class Meta:
+        model = Horario
+        fields = ['dia', 'jornada', 'clase']
+
+    # Definir las opciones de días y jornadas
+    dia = forms.ChoiceField(choices=[
+        ('Lunes', 'Lunes'),
+        ('Martes', 'Martes'),
+        ('Miércoles', 'Miércoles'),
+        ('Jueves', 'Jueves'),
+        ('Viernes', 'Viernes'),
+    ], label="Día")
+
+    jornada = forms.ChoiceField(choices=[
+        ('Primera Jornada', 'Primera Jornada'),
+        ('Segunda Jornada', 'Segunda Jornada'),
+        ('Tercera Jornada', 'Tercera Jornada'),
+    ], label="Jornada")
+
+    clase = forms.ModelChoiceField(queryset=Clases.objects.none(), label="Clase")
+
+    def __init__(self, *args, **kwargs):
+        curso = kwargs.pop('curso', None)  # Obtener el curso pasado a través de la vista
+        super().__init__(*args, **kwargs)
+        if curso:
+            # Filtrar las clases por el curso seleccionado
+            self.fields['clase'].queryset = Clases.objects.filter(curso=curso)

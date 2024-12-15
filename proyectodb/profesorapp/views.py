@@ -1,7 +1,7 @@
 from datetime import timezone
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render, redirect
-from appproject.models import Profesor, Estudiante, Calificacion, Clases, Curso, Prueba
+from appproject.models import Profesor, Estudiante, Calificacion, Clases, Curso, Prueba, PruebaSubida
 from appproject.forms import LoginForm, DocumentoForm, TareaForm, PruebaForm, FiltroNotasForm
 from django.urls import reverse
 
@@ -200,6 +200,14 @@ def asignar_notas(request, prueba_id):
         if not created:
             calificacion.nota = float(nota)
             calificacion.save()
-        return redirect('Panel_profesor')
+        return redirect('panel_profesor')
 
     return render(request, 'asignar_notas.html', {'prueba': prueba, 'estudiantes': estudiantes})
+
+def ver_pruebas_realizadas(request):
+    if not request.session.get('autenticado'):  # Verificar autenticación
+        return redirect('login_profesor')
+
+    pruebas_subidas = PruebaSubida.objects.all()  # Aquí puedes filtrar según el curso o materia del profesor
+
+    return render(request, 'ver_pruebas_realizadas.html', {'pruebas_subidas': pruebas_subidas})

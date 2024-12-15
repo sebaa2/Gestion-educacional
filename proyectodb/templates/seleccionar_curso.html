@@ -1,0 +1,17 @@
+{% extends 'Base.html' %}
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Seleccionar Curso para Crear Horario</h2>
+    <form method="get" action="{% url 'armar_horario' %}">
+        <div class="form-group">
+            <label for="curso">Seleccione un Curso:</label>
+            <select class="form-control" id="curso" name="curso_id" required>
+                {% for curso in cursos %}
+                <option value="{{ curso.idCurso }}">{{ curso.nombre_curso }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Armar Horario</button>
+    </form>
+</div>
+{% endblock %}

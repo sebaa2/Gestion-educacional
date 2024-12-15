@@ -1,0 +1,40 @@
+{% extends "./Base.html" %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Pruebas Realizadas por los Estudiantes</h2>
+
+    {% if pruebas_subidas %}
+        <div class="list-group">
+            {% for prueba_subida in pruebas_subidas %}
+                <div class="list-group-item mb-3 shadow-sm">
+                    <h4 class="mb-2">{{ prueba_subida.prueba.titulo }}</h4>
+                    <p class="text-muted">
+                        Estudiante: {{ prueba_subida.estudiante.nombre }} {{ prueba_subida.estudiante.apellido }}<br>
+                        Curso: {{ prueba_subida.estudiante.curso.nombre_curso }}<br>
+                        Asignatura: {{ prueba_subida.prueba.clase.nombre }}
+                    </p>
+                    <p class="fw-bold">Fecha de subida: <span class="text-danger">{{ prueba_subida.fecha_subida }}</span></p>
+                    
+                    <!-- Enlace para descargar el archivo -->
+                    {% if prueba_subida.archivo %}
+                        <a href="{{ prueba_subida.archivo.url }}" class="btn btn-info btn-sm" download>Descargar Archivo</a>
+                    {% else %}
+                        <p>No hay archivo disponible para esta prueba.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center" role="alert">
+            <i class="bi bi-exclamation-circle-fill"></i> No se han realizado pruebas en este momento.
+        </div>
+    {% endif %}
+    
+    <!-- Botones de redirección -->
+    <div class="text-center mt-5">
+        <a href="{% url 'logout_profesor' %}" class="btn btn-danger btn-lg mb-2">Cerrar sesión</a>
+        <a href="{% url 'panel_profesor' %}" class="btn btn-primary btn-lg">Ir al Panel Profesor</a>
+    </div>
+</div>
+{% endblock %}

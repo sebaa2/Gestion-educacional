@@ -1,0 +1,30 @@
+{% extends 'Base.html' %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Armar Horario para el Curso: {{ curso.nombre_curso }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="{{ form.dia.id_for_label }}" class="form-label">Día</label>
+            {{ form.dia }}
+        </div>
+
+        <div class="mb-3">
+            <label for="{{ form.jornada.id_for_label }}" class="form-label">Jornada</label>
+            {{ form.jornada }}
+        </div>
+
+        <div class="mb-3">
+            <label for="{{ form.clase.id_for_label }}" class="form-label">Clase</label>
+            {{ form.clase }}
+        </div>
+
+        <button type="submit" class="btn btn-success mt-3">Guardar Horario</button>
+    </form>
+
+    <a href="{% url 'seleccionar_curso' %}" class="btn btn-secondary mt-3">Volver</a>
+</div>
+{% endblock %}
+

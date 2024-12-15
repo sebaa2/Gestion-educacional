@@ -1,14 +1,11 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.shortcuts import get_object_or_404, render, redirect
-<<<<<<< HEAD
 from .models import Estudiante, Calificacion, Clases, Documento, Tarea, Prueba
-=======
-from .models import Curso, Estudiante, Calificacion, Clases, Documento, Tarea
->>>>>>> 42c953bedb31708a0ffeae8a712a14fc4d5e6b54
+from .models import Curso, Estudiante, Calificacion, Clases, Documento, Tarea, Horario
 from datetime import datetime, timezone
-from .forms import LoginForm 
+from .forms import LoginForm, PruebaSubidaForm
 from django.urls import reverse
 import os
 
@@ -201,4 +198,55 @@ def ver_pruebas(request):
     else:
         return redirect('login_estudiante')
 
-    
+def subir_prueba(request):
+    if request.session.get('autenticado'):
+        estudiante_id = request.session.get('usuario_id')
+        estudiante = Estudiante.objects.get(idEstudiante=estudiante_id)
+
+        prueba_id = request.GET.get('prueba_id')  # Obtener el ID de la prueba desde la URL
+        try:
+            prueba = Prueba.objects.get(id=prueba_id)  # Obtener la prueba correspondiente
+        except Prueba.DoesNotExist:
+            return redirect('ver_pruebas')  # Si no se encuentra la prueba, redirigir
+
+        if request.method == 'POST':
+            form = PruebaSubidaForm(request.POST, request.FILES)
+            if form.is_valid():
+                prueba_subida = form.save(commit=False)
+                prueba_subida.estudiante = estudiante  # Relaciona al estudiante
+                prueba_subida.prueba = prueba  # Relaciona la prueba seleccionada
+                prueba_subida.save()
+                return redirect('ver_pruebas')  # Redirige después de subir la prueba
+        else:
+            form = PruebaSubidaForm()
+
+        # Pasar la prueba seleccionada al contexto
+        return render(request, 'subir_prueba.html', {'form': form, 'prueba': prueba})
+    else:
+        return redirect('login_estudiante')
+
+def ver_horario_curso(request, curso_id):
+    if not request.session.get('autenticado'):
+        return redirect('login')  # Redirigir al login si no está autenticado
+
+    estudiante_id = request.session.get('usuario_id')
+    estudiante = get_object_or_404(Estudiante, idEstudiante=estudiante_id)
+
+    # Verificar si el estudiante pertenece al curso seleccionado
+    curso = get_object_or_404(Curso, idCurso=curso_id)
+    if estudiante.curso.idCurso != curso_id:
+        return redirect('error_permiso')
+
+    # Obtener los horarios del curso
+    horarios = Horario.objects.filter(curso=curso)
+
+    # Definir los días y jornadas
+    dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes']
+    jornadas = ['Primera Jornada', 'Segunda Jornada', 'Tercera Jornada']
+
+    return render(request, 'ver_horario_curso.html', {
+        'curso': curso,
+        'horarios': horarios,
+        'dias': dias,
+        'jornadas': jornadas
+    })

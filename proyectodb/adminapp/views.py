@@ -1,8 +1,8 @@
 from django.forms import ValidationError
 from django.shortcuts import render
 from django.urls import reverse
-from appproject.models import Administrador, Estudiante, Profesor, Curso, Clases, Tarea, Calificacion
-from appproject.forms import LoginForm, AgregarEstudiantes, AgregarProfesor, AgregarCursoForm, AgregarAsignaturas
+from appproject.models import Administrador, Estudiante, Profesor, Curso, Clases, Tarea, Calificacion, Horario
+from appproject.forms import LoginForm, AgregarEstudiantes, AgregarProfesor, AgregarCursoForm, AgregarAsignaturas, HorarioForm
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from datetime import datetime
@@ -205,13 +205,82 @@ def admin_dashboard(request):
     total_estudiantes = Estudiante.objects.count()
     total_cursos = Curso.objects.count()
     total_clases = Clases.objects.count()
-    ultimas_calificaciones = Calificacion.objects.all().order_by('-fecha_registro')[:5]
 
     context = {
         'total_profesores': total_profesores,
         'total_estudiantes': total_estudiantes,
         'total_cursos': total_cursos,
         'total_clases': total_clases,
-        'ultimas_calificaciones': ultimas_calificaciones,
     }
     return render(request, 'admin_dashboard.html', context)
+
+def seleccionar_curso(request):
+    cursos = Curso.objects.all()  # Obtén todos los cursos
+    return render(request, 'seleccionar_curso.html', {'cursos': cursos})
+
+def armar_horario(request):
+    curso_id = request.GET.get('curso_id')  # Obtener el curso seleccionado
+    if not curso_id:  # Validar si no se recibe un curso_id
+        return redirect('seleccionar_curso')
+
+    curso = get_object_or_404(Curso, idCurso=curso_id)  # Usar idCurso como clave primaria
+    clases = Clases.objects.filter(curso=curso)  # Materias del curso
+
+    dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes']
+    jornadas = ['Primera Jornada', 'Segunda Jornada', 'Tercera Jornada']
+
+    if request.method == 'POST':
+        for dia in dias:
+            for jornada in jornadas:
+                clase_id = request.POST.get(f"{dia}_{jornada}")
+                if clase_id:
+                   clase = Clases.objects.get(id=clase_id)
+                # Evitar duplicados
+                   if not Horario.objects.filter(curso=curso, dia=dia, jornada=jornada).exists():
+                        Horario.objects.create(
+                           curso=curso,
+                           dia=dia,
+                           jornada=jornada,
+                           clase=clase
+                        )
+        return redirect('ver_horario', curso_id=curso.idCurso)
+
+    return render(request, 'armar_horario.html', {
+        'curso': curso,
+        'clases': clases,
+        'dias': dias,
+        'jornadas': jornadas,
+    })
+
+def ver_horario(request, curso_id):
+    horarios = Horario.objects.filter(curso_id=curso_id)
+    
+    # Definir listas de días y jornadas
+    dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
+    jornadas = ["Primera Jornada", "Segunda Jornada", "Tercera Jornada"]
+    
+    return render(request, 'ver_horario.html', {'horarios': horarios, 'dias': dias, 'jornadas': jornadas})
+
+def armar_horario(request):
+    curso_id = request.GET.get('curso_id')  # Obtener el curso seleccionado
+    if not curso_id:
+        return redirect('seleccionar_curso')
+
+    curso = get_object_or_404(Curso, idCurso=curso_id)
+
+    if request.method == 'POST':
+        form = HorarioForm(request.POST, curso=curso)
+        if form.is_valid():
+            horario = form.save(commit=False)
+            horario.curso = curso
+            horario.save()
+            return redirect('ver_horario', curso_id=curso.idCurso)
+    else:
+        form = HorarioForm(curso=curso)
+
+    return render(request, 'armar_horario.html', {
+        'curso': curso,
+        'form': form,
+    })
+
+
