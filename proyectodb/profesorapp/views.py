@@ -197,9 +197,10 @@ def asignar_notas(request, prueba_id):
                     profesor=prueba.profesor,  
                     defaults={'nota': float(nota)}
                 )
-        if not created:
-            calificacion.nota = float(nota)
-            calificacion.save()
+                if not created:
+                    calificacion.nota = float(nota)
+                    calificacion.save()
+
         return redirect('panel_profesor')
 
     return render(request, 'asignar_notas.html', {'prueba': prueba, 'estudiantes': estudiantes})
