@@ -4,54 +4,54 @@ Un sistema de gestión académica completo desarrollado con Django que facilita 
 Portal Académico es una plataforma web diseñada para modernizar la gestión educativa, permitiendo:
 
 ## Gestión de estudiantes, profesores y cursos
-- ** Administración de calificaciones y asistencia
-- ** Distribución de materiales de estudio
-- ** Asignación y seguimiento de tareas y pruebas
-- **  Creación y visualización de horarios
+- **Administración de calificaciones y asistencia
+- **Distribución de materiales de estudio
+- **Asignación y seguimiento de tareas y pruebas
+- **Creación y visualización de horarios
 
 #  ✨ Características Principales
 Para Administradores
 
-- ** ✅ Gestión completa de estudiantes y profesores
-- ** 📚 Administración de cursos y asignaturas
-- ** 📅 Creación de horarios personalizados por curso
-- ** 📊 Dashboard con estadísticas del sistema
-- ** 🔧 Control total sobre la estructura académica
+- **✅ Gestión completa de estudiantes y profesores
+- **📚 Administración de cursos y asignaturas
+- **📅 Creación de horarios personalizados por curso
+- **📊 Dashboard con estadísticas del sistema
+- **🔧 Control total sobre la estructura académica
 
 ## Para Profesores
 
-- ** 📝 Subir material de estudio y recursos
-- ** 📋 Crear y asignar tareas
-- ** 📄 Crear y gestionar pruebas
-- ** 💯 Asignar calificaciones a estudiantes
-- ** 👀 Ver pruebas realizadas por estudiantes
+- **📝 Subir material de estudio y recursos
+- **📋 Crear y asignar tareas
+- **📄 Crear y gestionar pruebas
+- **💯 Asignar calificaciones a estudiantes
+- **👀 Ver pruebas realizadas por estudiantes
 
 ## Para Estudiantes
 
-- ** 📖 Acceso a materiales de estudio
-- ** ✍️ Ver tareas asignadas
-- ** 📝 Subir pruebas completadas
-- ** 📊 Consultar calificaciones
-- ** 🕐 Visualizar horarios de clase
+- **📖 Acceso a materiales de estudio
+- **✍️ Ver tareas asignadas
+- **📝 Subir pruebas completadas
+- **📊 Consultar calificaciones
+- **🕐 Visualizar horarios de clase
 
 # 🛠️ Tecnologías Utilizadas
 
-- ** Backend: Django 5.1
-- ** Base de Datos: SQLite (desarrollo) / PostgreSQL (producción recomendada)
+- **Backend: Django 5.1
+- **Base de Datos: SQLite (desarrollo) / PostgreSQL (producción recomendada)
 
-- ** Frontend:
-- ** Bootstrap 5.3.3
-- ** Tailwind CSS
-- ** HTML5, CSS3
+- **Frontend:
+- **Bootstrap 5.3.3
+- **Tailwind CSS
+- **HTML5, CSS3
 
-- ** JavaScript: jQuery, DataTables, Chart.js
+- **JavaScript: jQuery, DataTables, Chart.js
 
 ## 📦 Instalación
-- ** Requisitos Previos
+- **Requisitos Previos
 
-- ** Python 3.8 o superior
-- ** pip (gestor de paquetes de Python)
-- ** virtualenv (recomendado)
+- **Python 3.8 o superior
+- **pip (gestor de paquetes de Python)
+- **virtualenv (recomendado)
 
 ## Pasos de Instalación
 ```
